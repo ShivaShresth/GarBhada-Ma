@@ -18,8 +18,8 @@ class _Filter_PageState extends State<Filter_Page> {
   String? bedroom;
   String? bathroom;
   String? furnishing;
-  String? price1;
-  String? price2;
+  String? price1="0";
+  String? price2="0";
 
 
 
@@ -56,13 +56,16 @@ class _Filter_PageState extends State<Filter_Page> {
                     ),
                     InkWell(
                       onTap: () {
-                        property = "house";
-                      },
+
+setState(() {
+                          property = "house";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:property=="house"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "House",
@@ -75,13 +78,16 @@ class _Filter_PageState extends State<Filter_Page> {
                     ),
                     InkWell(
                       onTap: (){  
-                        property="apartment";
-                      },
+
+setState(() {
+                          property="apartment";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:property=="apartment"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "Apartment",
@@ -94,13 +100,15 @@ class _Filter_PageState extends State<Filter_Page> {
                     ),
                     InkWell(
                       onTap: (){  
-                        property="commerical";
-                      },
+setState(() {
+                          property="commerical";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:property=="commerical"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "Commerical",
@@ -176,13 +184,15 @@ price2=val;
                   
                     InkWell(
                       onTap: (){  
-                        bedroom="1";
-                      },
+setState(() {
+                          bedroom="1";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:bedroom=="1"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "1",
@@ -195,13 +205,16 @@ price2=val;
                     ),
                     InkWell(
                       onTap: (){  
-                        bedroom="2";
+setState(() {
+                          bedroom="2";
+
+});
                       },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:bedroom=="2"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "2",
@@ -214,13 +227,15 @@ price2=val;
                     ),
                     InkWell(
                       onTap: (){  
-                        bedroom="3";
-                      },
+setState(() {
+                          bedroom="3";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:bedroom=="3"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "3",
@@ -233,13 +248,16 @@ price2=val;
                     ),
                     InkWell(
                       onTap: (){  
-                        bedroom="4";
-                      },
+
+setState(() {
+                          bedroom="4";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:bedroom=="4"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "4",
@@ -252,13 +270,16 @@ price2=val;
                     ),
                     InkWell(
                       onTap: (){  
-                        bedroom="5";
+setState(() {
+                          bedroom="5";
+
+});
                       },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:bedroom=="5"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "5",
@@ -290,13 +311,15 @@ price2=val;
                    
                     InkWell(
                       onTap: (){  
-                        bathroom="1";
-                      },
+setState(() {
+                          bathroom="1";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:bathroom=="1"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "1",
@@ -309,13 +332,15 @@ price2=val;
                     ),
                     InkWell(
                       onTap: (){  
-                        bathroom="2";
-                      },
+setState(() {
+                          bathroom="2";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:bathroom=="2"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "2",
@@ -328,13 +353,15 @@ price2=val;
                     ),
                     InkWell(
                       onTap: (){  
-                        bathroom="3";
-                      },
+setState(() {
+                          bathroom="3";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:bathroom=="3"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "3",
@@ -347,13 +374,15 @@ price2=val;
                     ),
                     InkWell(
                       onTap: (){  
-                        bathroom="4";
-                      },
+setState(() {
+                          bathroom="4";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:bathroom=="4"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "4",
@@ -366,13 +395,15 @@ price2=val;
                     ),
                     InkWell(
                       onTap: (){ 
-                        bathroom="5";
-                      },
+setState(() {
+                          bathroom="5";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:bathroom=="5"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "5",
@@ -402,13 +433,15 @@ price2=val;
                  
                     InkWell(
                       onTap: (){  
-                        furnishing="not-furnished";
-                      },
+setState(() {
+                          furnishing="not-furnished";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:furnishing=="not-furnished"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "Not Furnished",
@@ -420,14 +453,17 @@ price2=val;
                       width: 10,
                     ),
                     InkWell(
-                      onTap: (){  
-                        furnishing="semi-furnished";
+                      onTap: (){
+                        setState(() {
+                          furnishing="semi-furnished";
+                        });
+                        
                       },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:furnishing=="semi-furnished"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "Semi-Furnished",
@@ -440,13 +476,15 @@ price2=val;
                     ),
                     InkWell(
                       onTap: (){  
-                        furnishing="furnishing";
-                      },
+setState(() {
+                          furnishing="furnishing";
+
+});                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color: furnishing=="furnishing"?Colors.green: Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(
                           "Fully Furnished",

@@ -42,11 +42,10 @@ dependencies:
   bottom_navy_bar: ^6.1.0
   page_transition: ^2.1.0
   image_picker: ^1.1.2
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   dropdown_button2: ^2.3.9
   path_provider: ^2.1.4
   url_launcher: ^6.3.0
-  flutter_phone_direct_caller: ^2.1.1
   geolocator: ^13.0.1
   geocoding: ^3.0.0
   google_maps_flutter: ^2.9.0

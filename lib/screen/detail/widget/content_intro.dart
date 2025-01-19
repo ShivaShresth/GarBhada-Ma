@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+//import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:renthouse/firebase_firestore/firebase_firestore.dart';
@@ -60,7 +60,7 @@ class _ContentIntroState extends State<ContentIntro> {
   }
 
   directCall() async {
-    await FlutterPhoneDirectCaller.callNumber('1234567890');
+  //  await FlutterPhoneDirectCaller.callNumber('1234567890');
   }
 
   String calculateTimeDifference(String dateString) {

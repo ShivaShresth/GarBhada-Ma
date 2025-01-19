@@ -91,22 +91,33 @@ class _List_Of_OperatorState extends State<List_Of_Operator> {
                                 )
                               ]),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                  widget.categoryModel!.isFavourite == false
-                                      ? "Occupied"
-                                      : "UnOccupied",
-                                  style: TextStyle(
-                                      color: widget.categoryModel!.isFavourite == false
-                                          ? Colors.red
-                                          : Colors.green,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
+                                child: CircleAvatar(
+                                  
+                                  radius: 20,
+                                  backgroundImage:NetworkImage("https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg"),
                                 ),
                               ),
+                              SizedBox(width: 10,),
+                              Expanded(child: Text("Owner")),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(left: 10),
+                              //   child: Text(
+                              //     widget.categoryModel!.isFavourite == false
+                              //         ? "Occupied"
+                              //         : "UnOccupied",
+                              //     style: TextStyle(
+                              //         color: widget.categoryModel!.isFavourite == false
+                              //             ? Colors.red
+                              //             : Colors.green,
+                              //         fontWeight: FontWeight.bold,
+                              //         fontSize: 20),
+                              //   ),
+                              // ),
+                              Spacer(),
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child:widget.categoryModel!.isFavourite? Icon(

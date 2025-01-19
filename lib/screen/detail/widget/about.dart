@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+//import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +57,7 @@ class _AboutState extends State<About> {
    }
 
    directcall()async{   
-    await FlutterPhoneDirectCaller.callNumber('1234567890');
+   // await FlutterPhoneDirectCaller.callNumber('1234567890');
    }
 
    Position? _currentLocation;
@@ -113,55 +113,71 @@ address1=address;
           //       .copyWith(fontSize: 20, fontWeight: FontWeight.bold),
           // ),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: Center(
-                  child: Text(
-                    "About",
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        decorationColor:
-                            Colors.grey, // Optional: Set the underline color
-                        decorationThickness: 3,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              SizedBox(width: 10,),
-              GestureDetector(
-                onTap: (){
-                  callnumber();  
-                  
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Chat",
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          decorationColor:
-                              Colors.grey, // Optional: Set the underline color
-                          decorationThickness: 3,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ),
-                            SizedBox(width: 10,),
+ ExpansionTile(
+  tilePadding: EdgeInsets.only(left: 6),
+        title: Text(
+          "About",
+          style: TextStyle(
+            decoration: TextDecoration.underline,
+            decorationColor: Colors.green, // Optional: Set the underline color
+            decorationThickness: 3,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        children: [
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              "Here is some information about the topic. This content will expand when the tile is tapped. You can put any content you like here.",
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        ],),
 
-              GestureDetector(
+          // Container(
+          //   width:MediaQuery.of(context).size.width,
+          //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          //   decoration: BoxDecoration(
+          //     border: Border.all(color: Colors.grey),
+          //   ),
+          //   child: Text(
+          //     "About",
+          //     style: TextStyle(
+          //         decoration: TextDecoration.underline,
+          //         decorationColor:
+          //             Colors.grey, // Optional: Set the underline color
+          //         decorationThickness: 3,
+          //         fontSize: 20,
+          //         fontWeight: FontWeight.bold),
+          //   ),
+          // ),
+
+        
+          // Text(
+          //  // "${widget.categoryModel!.name}",
+          //  "${widget.categoryModel!.description} hi",
+      
+          // ),
+
+
+           ExpansionTile(
+              tilePadding: EdgeInsets.only(left: 6),
+
+        title: Text(
+          "Location",
+          style: TextStyle(
+            decoration: TextDecoration.underline,
+            decorationColor: Colors.green, // Optional: Set the underline color
+            decorationThickness: 3,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        children: [
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: GestureDetector(
                 onTap: ()async{  
     //                   Future.delayed(Duration(seconds: 0),()async{   
     //    _currentLocation = await _getCurrentLocation();
@@ -179,25 +195,36 @@ address1=address;
                     border: Border.all(color: Colors.grey),
                     
                   ),
-                  child: Center(
-                    child: Text("Location",style: TextStyle( decoration: TextDecoration.underline,
-                        decorationColor: Colors.grey, // Optional: Set the underline color
-                        decorationThickness: 3, fontSize: 20,fontWeight: FontWeight.bold ),),
-                  ),
+                  child: Image.asset("assets/a.png")
                 ),
               ),
-                
-            ],
           ),
+        ],),
+    //        GestureDetector(
+    //             onTap: ()async{  
+    // //                   Future.delayed(Duration(seconds: 0),()async{   
+    // //    _currentLocation = await _getCurrentLocation();
+    // //               await _getAddressFromCoordinates();
+    // // });
+    //              //Navigator.push(context, MaterialPageRoute(builder: (context)=>GeolocationApp()));
+    //                 _currentLocation = await _getCurrentLocation();
+    //               await _getAddressFromCoordinates();
+    //               _launchMap();
 
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-           // "${widget.categoryModel!.name}",
-           "${widget.categoryModel!.description} hi",
-      
-          ),
+    //             },
+    //             child: Container(
+    //               padding: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+    //               decoration: BoxDecoration(  
+    //                 border: Border.all(color: Colors.grey),
+                    
+    //               ),
+    //               child: Center(
+    //                 child: Text("Location",style: TextStyle( decoration: TextDecoration.underline,
+    //                     decorationColor: Colors.grey, // Optional: Set the underline color
+    //                     decorationThickness: 3, fontSize: 20,fontWeight: FontWeight.bold ),),
+    //               ),
+    //             ),
+    //           ),
         ],
       ),
     );

@@ -6,6 +6,7 @@ import 'package:renthouse/model/category_model.dart';
 import 'package:renthouse/pages/all_pages/photo_view_page.dart';
 import 'package:renthouse/service/shared_pref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SliderScreen extends StatefulWidget {
   final CategoryModel? categoryModel;
@@ -19,12 +20,12 @@ class SliderScreen extends StatefulWidget {
 
 class _SliderScreenState extends State<SliderScreen> {
   List<String>? imageList;
-  CarouselController carouselController = CarouselController();
+  CarouselSliderController carouselSliderController = CarouselSliderController(); // Use CarouselSliderController
   int currentIndex = 0;
   double? num;
   List<String> displayedImages = [];
   bool showAllImages = false;
-  int? plus; // Declare plus here
+  int? plus;
 
   @override
   void initState() {
@@ -48,66 +49,38 @@ class _SliderScreenState extends State<SliderScreen> {
 
   // Fetch the plus value from Firestore
   void fetchPlusValue() async {
-    // final userId = FirebaseAuth.instance.currentUser?.uid;
-    // if (userId == null) {
-    //     print("User is not logged in.");
-    //     return;
-    // }
-
-    // print("Fetching data for user ID: $userId");
-    // print("Document path: cat/$userId/cats/${widget.categoryModel!.id}");
-
-    // DocumentSnapshot snapshot = await FirebaseFirestore.instance
-    //     .collection('cat')
-    //     .doc(userId)
-    //     .collection('cats')
-    //     .doc(widget.categoryModel!.id)
-    //     .get();
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-// CollectionReference productCollection = firestore.collection('categories');
- CollectionReference productCollection = firestore.collection('cat').doc(FirebaseAuth.instance.currentUser!.uid).collection("cats");
-
-// Create a new document reference with an automatically generated ID
-// DocumentReference doc = productCollection.doc();
-DocumentReference doc = productCollection.doc();
-
-     final user = FirebaseAuth.instance.currentUser;
+    try {
+      final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
         print("User is not authenticated");
-        return; 
+        return;
       }
 
       DocumentReference docRef = FirebaseFirestore.instance
           .collection("cat")
           .doc(user.uid)
           .collection("cats")
-          .doc(widget.categoryModel!.description);
+          .doc(widget.categoryModel?.description);
 
       DocumentSnapshot snapshot = await docRef.get();
 
-      // if (!snapshot.exists) {
-      //   print("Document not found: $viewId");
-      //   return; 
-      // }
-
-    if (snapshot.exists) {
-        // Use the data() method to get the content of the snapshot
+      if (snapshot.exists) {
         var data = snapshot.data();
         if (data != null && data is Map<String, dynamic>) {
-            setState(() {
-                plus = data['view'] ??0; // Access the 'view' field from the document data
-                print("Fetched plus value: $plus");
-            });
+          setState(() {
+            plus = data['view'] ?? 0;
+            print("Fetched plus value: $plus");
+          });
         } else {
-            print("No valid data found in the document.");
+          print("No valid data found in the document.");
         }
-    } else {
-            print("thess ${doc.id}");
-
-      print("thess ${snapshot}");
-        print("No data found for user: ${widget.categoryModel!.description}");
+      } else {
+        print("No document found for category: ${widget.categoryModel?.description}");
+      }
+    } catch (e) {
+      print("Error fetching data from Firestore: $e");
     }
-}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,44 +93,52 @@ DocumentReference doc = productCollection.doc();
             Stack(
               children: [
                 CarouselSlider(
-  items: displayedImages
-      .asMap() // Use asMap to get index
-      .entries
-      .map((entry) {
-        int index = entry.key; // Get the index
-        String imagePath = entry.value; // Get the image path
+                  items: displayedImages
+                      .asMap() // Use asMap to get index
+                      .entries
+                      .map((entry) {
+                        int index = entry.key; // Get the index
+                        String imagePath = entry.value; // Get the image path
 
-        return InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PhotoViewPage(
-                  photos: displayedImages,  // Pass the list of image URLs
-                  index: index,              // Use the correct index
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PhotoViewPage(
+                                  photos: displayedImages,  // Pass the list of image URLs
+                                  index: index,              // Use the correct index
+                                ),
+                              ),
+                            );
+                          },
+                          child: CachedNetworkImage(
+                            imageUrl: imagePath,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                Center(
+                                  child: CircularProgressIndicator(value: downloadProgress.progress),
+                                ),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                          ),
+                        );
+                      })
+                      .toList(),
+                  carouselController: carouselSliderController, // Use the CarouselSliderController here
+                  options: CarouselOptions(
+                    scrollPhysics: BouncingScrollPhysics(),
+                    autoPlay: true,
+                    aspectRatio: 1,
+                    viewportFraction: 1,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        currentIndex = index; // Update current index
+                      });
+                    },
+                    initialPage: num?.toInt() ?? 0,
+                  ),
                 ),
-              ),
-            );
-          },
-          child: Image.network(imagePath, fit: BoxFit.cover, width: double.infinity),
-        );
-      })
-      .toList(),
-  carouselController: carouselController,
-  options: CarouselOptions(
-    scrollPhysics: BouncingScrollPhysics(),
-    autoPlay: true,
-    aspectRatio: 1,
-    viewportFraction: 1,
-    onPageChanged: (index, reason) {
-      setState(() {
-        currentIndex = index; // Update current index
-      });
-    },
-    initialPage: num?.toInt() ?? 0,
-  ),
-),
-
                 Positioned(
                   bottom: 10,
                   left: 0,
@@ -167,7 +148,7 @@ DocumentReference doc = productCollection.doc();
                     children: imageList != null
                         ? imageList!.asMap().entries.map((entry) {
                             return GestureDetector(
-                              onTap: () => carouselController.animateToPage(entry.key),
+                              onTap: () => carouselSliderController.animateToPage(entry.key), // Use the updated method
                               child: Container(
                                 width: currentIndex == entry.key ? 17 : 7,
                                 height: 7.0,
@@ -194,7 +175,7 @@ DocumentReference doc = productCollection.doc();
               if (userNumber != null) {
                 setState(() {
                   currentIndex = int.parse(userNumber);
-                  carouselController.animateToPage(currentIndex);
+                  carouselSliderController.animateToPage(currentIndex); // Use the updated method
                 });
               }
             },
@@ -246,7 +227,7 @@ DocumentReference doc = productCollection.doc();
                             onTap: () {
                               setState(() {
                                 currentIndex = entry.key;
-                                carouselController.animateToPage(entry.key);
+                                carouselSliderController.animateToPage(entry.key); // Use the updated method
                               });
                               SharedPreferenceHelper().saveUserNumber(entry.key.toString());
                             },
@@ -266,11 +247,16 @@ DocumentReference doc = productCollection.doc();
                                     ),
                                   ],
                                 ),
-                                child: Image.network(
-                                  entry.value,
+                                child: CachedNetworkImage(
+                                  imageUrl: entry.value,
                                   width: 50,
                                   height: 50,
                                   fit: BoxFit.cover,
+                                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                      Center(
+                                        child: CircularProgressIndicator(value: downloadProgress.progress),
+                                      ),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
                                 ),
                               ),
                             ),

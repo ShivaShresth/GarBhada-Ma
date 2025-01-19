@@ -615,9 +615,9 @@ class _AddProductPageState extends State<AddProductPage> {
                         Container(
                             padding:
                                 EdgeInsets.only(top: 5, left: 10, right: 10),
-                            height: MediaQuery.of(context).size.height,
+                            height: MediaQuery.of(context).size.height/0.64,
                             width: MediaQuery.of(context).size.height,
-                            color: Colors.white,
+                           // color: Colors.white,
                             child: Column(
                               children: [
                                 Container(
@@ -1292,20 +1292,18 @@ class _AddProductPageState extends State<AddProductPage> {
                                       //     TextFormField()
                                       //   ],
                                       // )
+
+                                      
                                     ],
                                   ),
                                 ),
 
                                 SizedBox(
-                                  height: 0,
+                                  height: 20,
                                 ),
-                              ],
-                            )),
-                        SizedBox(
-                          height: 0,
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
+
+                                Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5),
                           padding: EdgeInsets.symmetric(
                               horizontal: 10, vertical: 20),
                           decoration: BoxDecoration(
@@ -1584,11 +1582,11 @@ class _AddProductPageState extends State<AddProductPage> {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
+
+                        SizedBox(height: 20,),
+
+                          Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5),
                           padding: EdgeInsets.only(top: 10,left: 15,right: 15),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -1626,6 +1624,333 @@ class _AddProductPageState extends State<AddProductPage> {
                             ),
                           ),
                         ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 0,
+                        ),
+                        // Container(
+                        //   margin: EdgeInsets.symmetric(horizontal: 10),
+                        //   padding: EdgeInsets.symmetric(
+                        //       horizontal: 10, vertical: 20),
+                        //   decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(10),
+                        //       color: Colors.white,
+                        //       boxShadow: [
+                        //         BoxShadow(
+                        //           color: Colors.black.withOpacity(0.1),
+                        //           spreadRadius: 5,
+                        //           blurRadius: 6,
+                        //           offset: Offset(2, 2),
+                        //         )
+                        //       ]),
+                        //   child: Column(
+                        //     children: [
+                        //       Row(
+                        //         children: [
+                        //           Icon(Icons.house_outlined),
+                        //           SizedBox(
+                        //             width: 10,
+                        //           ),
+                        //           Expanded(child: Text("House Name")),
+                        //           Container(
+                        //               //margin: EdgeInsets.only(bottom: 8),
+                        //               padding: EdgeInsets.only(
+                        //                   top: 0, bottom: 1, left: 8),
+                        //               height: 35,
+                        //               width: 120,
+                        //               decoration: BoxDecoration(
+                        //                   border:
+                        //                       Border.all(color: Colors.grey),
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(4)),
+                        //               child: Center(
+                        //                 child: TextFormField(
+                        //                   controller: houseNameController,
+                        //                   validator: (value) {
+                        //                     if (value == null ||
+                        //                         value.isEmpty) {
+                        //                       return "House Name Cannot be empty";
+                        //                     } else {
+                        //                       return null;
+                        //                     }
+                        //                   },
+                        //                   decoration: InputDecoration(
+                        //                        hintText: "House/Owner name",
+                        //                             hintStyle: TextStyle(fontSize: 12),
+                        //                             border:InputBorder.none
+                        //                       //border: OutlineInputBorder()
+                        //                       ),
+                        //                 ),
+                        //               )),
+                        //         ],
+                        //       ),
+                        //       SizedBox(
+                        //         height: 10,
+                        //       ),
+                        //       Row(
+                        //         children: [
+                        //           Icon(Icons.location_city),
+                        //           SizedBox(
+                        //             width: 10,
+                        //           ),
+                        //           Expanded(child: Text("Floor")),
+                        //           Container(
+                        //               //margin: EdgeInsets.only(bottom: 8),
+                        //               padding: EdgeInsets.only(
+                        //                   top: 0, bottom: 1, left: 8),
+                        //               height: 35,
+                        //               width: 120,
+                        //               decoration: BoxDecoration(
+                        //                   border:
+                        //                       Border.all(color: Colors.grey),
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(4)),
+                        //               child: Center(
+                        //                 child: TextFormField(
+                        //                   controller: floorController,
+                        //                   keyboardType: TextInputType.number,
+                        //                   validator: (value) {
+                        //                     if (value == null ||
+                        //                         value.isEmpty) {
+                        //                       return "Floor Cannot be empty";
+                        //                     } else {
+                        //                       return null;
+                        //                     }
+                        //                   },
+                        //                   decoration: InputDecoration(
+                        //                       hintText: "Ex:- 1,2,3,4 Floor",
+                        //                             hintStyle: TextStyle(fontSize: 14),
+                        //                             border:InputBorder.none
+                        //                       //border: OutlineInputBorder()
+                        //                       ),
+                        //                 ),
+                        //               )),
+                        //         ],
+                        //       ),
+                        //       SizedBox(
+                        //         height: 10,
+                        //       ),
+                        //       Row(
+                        //         children: [
+                        //           Icon(Icons.landscape),
+                        //           SizedBox(
+                        //             width: 10,
+                        //           ),
+                        //           Expanded(child: Text("Road Size")),
+                        //           Container(
+                        //               //margin: EdgeInsets.only(bottom: 8),
+                        //               padding: EdgeInsets.only(
+                        //                   top: 0, bottom: 1, left: 8),
+                        //               height: 35,
+                        //               width: 120,
+                        //               decoration: BoxDecoration(
+                        //                   border:
+                        //                       Border.all(color: Colors.grey),
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(4)),
+                        //               child: Center(
+                        //                 child: TextFormField(
+                        //                                                               keyboardType: TextInputType.number,
+
+                        //                   controller: roadsizeController,
+                        //                   validator: (value) {
+                        //                     if (value == null ||
+                        //                         value.isEmpty) {
+                        //                       return "Road Size Cannot be empty";
+                        //                     } else {
+                        //                       return null;
+                        //                     }
+                        //                   },
+                        //                   decoration: InputDecoration(
+                        //                       hintText: "Ex:- 10 meter",
+                        //                             hintStyle: TextStyle(fontSize: 14),
+                        //                             border:InputBorder.none
+                        //                       //border: OutlineInputBorder()
+                        //                       ),
+                        //                 ),
+                        //               )),
+                        //         ],
+                        //       ),
+                        //       SizedBox(
+                        //         height: 10,
+                        //       ),
+                        //       Row(
+                        //         children: [
+                        //           Icon(Icons.location_city),
+                        //           SizedBox(
+                        //             width: 10,
+                        //           ),
+                        //           Expanded(child: Text("Build Sqrtft")),
+                        //           Container(
+                        //               //margin: EdgeInsets.only(bottom: 8),
+                        //               padding: EdgeInsets.only(
+                        //                   top: 0, bottom: 1, left: 6),
+                        //               height: 35,
+                        //               width: 120,
+                        //               decoration: BoxDecoration(
+                        //                   border:
+                        //                       Border.all(color: Colors.grey),
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(4)),
+                        //               child: Center(
+                        //                 child: TextFormField(
+                        //                                                               keyboardType: TextInputType.number,
+
+                        //                   controller: buildsqrtftController,
+                        //                   validator: (value) {
+                        //                     if (value == null ||
+                        //                         value.isEmpty) {
+                        //                       return "Build Sqrtft Cannot be empty";
+                        //                     } else {
+                        //                       return null;
+                        //                     }
+                        //                   },
+                        //                   decoration: InputDecoration(
+                        //                       hintText: "Ex:- 123 Feet",
+                        //                             hintStyle: TextStyle(fontSize: 14),
+                        //                       border:InputBorder.none
+
+                        //                       ),
+                        //                 ),
+                        //               )),
+                        //         ],
+                        //       ),
+                        //       SizedBox(
+                        //         height: 10,
+                        //       ),
+                        //       Row(
+                        //         children: [
+                        //           Icon(Icons.landscape_rounded),
+                        //           SizedBox(
+                        //             width: 10,
+                        //           ),
+                        //           Expanded(child: Text("Land Mark")),
+                        //           Container(
+                        //               //margin: EdgeInsets.only(bottom: 8),
+                        //               padding: EdgeInsets.only(
+                        //                   top: 0, bottom: 1, left: 8),
+                        //               height: 35,
+                        //               width: 120,
+                        //               decoration: BoxDecoration(
+                        //                   border:
+                        //                       Border.all(color: Colors.grey),
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(4)),
+                        //               child: Center(
+                        //                 child: TextFormField(
+                        //                   controller: landmarkController,
+                        //                   validator: (value) {
+                        //                     if (value == null ||
+                        //                         value.isEmpty) {
+                        //                       return "Land Mark Cannot be empty";
+                        //                     } else {
+                        //                       return null;
+                        //                     }
+                        //                   },
+                        //                   decoration: InputDecoration(
+                        //                       hintText: "Popular Place",
+                        //                             hintStyle: TextStyle(fontSize: 14),
+                        //                                                                           border:InputBorder.none
+
+                        //                       ),
+                        //                 ),
+                        //               )),
+                        //         ],
+                        //       ),
+                        //       SizedBox(
+                        //         height: 10,
+                        //       ),
+                        //       SizedBox(
+                        //         height: 10,
+                        //       ),
+                        //       Row(
+                        //         children: [
+                        //           Icon(Icons.mobile_friendly),
+                        //           SizedBox(
+                        //             width: 10,
+                        //           ),
+                        //           Expanded(child: Text("Phone Number")),
+                        //           Container(
+                        //               //margin: EdgeInsets.only(bottom: 8),
+                        //               padding: EdgeInsets.only(
+                        //                   top: 0, bottom: 1, left: 8),
+                        //               height: 35,
+                        //               width: 120,
+                        //               decoration: BoxDecoration(
+                        //                   border:
+                        //                       Border.all(color: Colors.grey),
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(4)),
+                        //               child: Center(
+                        //                 child: TextFormField(
+                        //                   keyboardType: TextInputType.number,
+                        //                   controller: phonenumberController,
+                        //                   validator: (value) {
+                        //                     if (value == null ||
+                        //                         value.isEmpty) {
+                        //                       return "Phone Number Cannot be empty";
+                        //                     } else {
+                        //                       return null;
+                        //                     }
+                        //                   },
+                        //                   decoration: InputDecoration(
+                        //                       hintText: "981234......",
+                        //                             hintStyle: TextStyle(fontSize: 14),
+                        //                                                     border:InputBorder.none
+
+                                                    
+                        //                       //border: OutlineInputBorder()
+                        //                       ),
+                        //                 ),
+                        //               )),
+                        //         ],
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        // Container(
+                        //   margin: EdgeInsets.symmetric(horizontal: 10),
+                        //   padding: EdgeInsets.only(top: 10,left: 15,right: 15),
+                        //   decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(10),
+                        //       color: Colors.white,
+                        //       boxShadow: [
+                        //         BoxShadow(
+                        //           color: Colors.black.withOpacity(0.1),
+                        //           spreadRadius: 5,
+                        //           blurRadius: 6,
+                        //           offset: Offset(2, 2),
+                        //         )
+                        //       ]),
+                        //   child: SingleChildScrollView(
+                        //     child: Column(
+                        //       children: [
+                        //         Align(
+                        //             alignment: Alignment.topLeft,
+                        //             child: Text("Description")),
+                        //         SizedBox(
+                        //           height: 10,
+                        //         ),
+                        //         Container(
+                        //             color: Colors.white,
+                        //             height: 160,
+                        //             width: double.infinity,
+                        //             child: TextField(
+                        //               controller: descriptionController,
+                        //               maxLines: 5,
+                        //               decoration: InputDecoration(
+                        //                   hintText: "Enter the Full Detail.......",
+                        //                               hintStyle: TextStyle(fontSize: 14),
+                        //                   border: OutlineInputBorder()),
+                        //             )),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 30,
                         ),

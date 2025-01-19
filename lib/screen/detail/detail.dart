@@ -63,20 +63,35 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 About(categoryModel: widget.categoryModel),
                 SizedBox(height: 20),
-                Text("${widget.categoryModel!.address.length}"),
+               // Text("${widget.categoryModel!.address.length}"),
+               Padding(
+                 padding: const EdgeInsets.only(left: 16,bottom: 10),
+                 child: Text(
+                            "Releted",
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors
+                                    .green, // Optional: Set the underline color
+                                decorationThickness: 3,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+               ),
                 _buildRecentOrNear(),
                 SizedBox(height: 100),
               ],
             ),
           ),
           Positioned(
-            bottom: 0,
+            bottom: 20,
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: 60,
               decoration: BoxDecoration(color: Colors.white),
               child: Row(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                SizedBox(width: 16,),
                   //Whatup
                   InkWell(
                     onTap: () {
@@ -87,6 +102,8 @@ class _DetailPageState extends State<DetailPage> {
                   SizedBox(
                     width: 20,
                   ),
+                                    Spacer(),
+
 //email
 
                   InkWell(
@@ -115,6 +132,8 @@ class _DetailPageState extends State<DetailPage> {
                   SizedBox(
                     width: 20,
                   ),
+                                    Spacer(),
+
 //phone
 
                   InkWell(
@@ -127,6 +146,8 @@ class _DetailPageState extends State<DetailPage> {
                   SizedBox(
                     width: 20,
                   ),
+                                    Spacer(),
+
                   InkWell(
                     onTap: () async {
                       final Uri url = Uri(
@@ -147,7 +168,7 @@ class _DetailPageState extends State<DetailPage> {
                   ),
 
                   //share
-                  Icon(Icons.share),
+                 // Icon(Icons.share),
                 ],
               ),
             ),
@@ -160,9 +181,9 @@ class _DetailPageState extends State<DetailPage> {
   Widget _buildRecentOrNear() {
     final address = widget.categoryModel?.address;
 
-    if (address != null && address.isNotEmpty) {
-      return Near(address: address);
-    }
+    // if (address != null && address.isNotEmpty) {
+    //   return Near(address: address);
+    // }
 
     return Recents();
   }

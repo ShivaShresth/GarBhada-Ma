@@ -45,9 +45,12 @@ class _Filter_Page_DisplayState extends State<Filter_Page_Display> {
     setState(() {
       isLoading = true;
     });
-    print("${widget.property} the gameo");
+    print("${widget.priceg} the ga76meo");
+        print("${widget.pricel} the gameo");
+
 
      filterList = await FirebaseFirestoreHelper.instance.fliters(widget.property,widget.priceg,widget.pricel,widget.bedroom,widget.bathroom,widget.furnishing);
+     
     //filterList = await FirebaseFirestoreHelper.instance.fliters(widget.property,widget.priceg,widget.pricel);
 
     setState(() {
