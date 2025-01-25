@@ -33,6 +33,7 @@ class CategoryModel {
     required this.roadsize,
     required this.longitude,
     required this.latitude,
+     this.facebook,
      this.view=0,
      this.viewId,
   });
@@ -64,6 +65,7 @@ class CategoryModel {
   String longitude;
   String latitude;
   String? viewId;
+  String? facebook;
   int? view;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
@@ -94,7 +96,8 @@ class CategoryModel {
       longitude: json['longitude'],
       latitude: json['latitude'],
       view:json['view'],
-      viewId: json['viewId']
+      viewId: json['viewId'],
+      facebook: json['facebook']
       
       );
 
@@ -126,7 +129,8 @@ class CategoryModel {
         "longitude":longitude??"",
         "latitude":latitude??"",
         "view":view??"",
-        "viewId":viewId??""
+        "viewId":viewId??"",
+        "facebook":facebook??""
       };
 
       Map<String, dynamic>toMap(){  
@@ -158,7 +162,9 @@ class CategoryModel {
         "longitude":longitude??"",
         "latitude":latitude??"",
         "view":view??"",
-        "viewId":viewId??""
+        "viewId":viewId??"",
+        "facebook":facebook??""
+
       
 
         };
@@ -167,6 +173,6 @@ class CategoryModel {
       CategoryModel copyWith({  
         String? address,
         int? view
-      })=>CategoryModel(image: image, id: id, nonveg: nonveg, name: name, description: description, status: status, isFavourite: isFavourite, rent: rent, address: address??this.address, date: date, type: type, landmark: landmark, floor: floor, negotiable: negotiable, roadtype: roadtype, furnishing: furnishing, buildupsqrft: buildupsqrft, phonenumber: phonenumber, kitchen: kitchen, bathroom: bathroom, bedroom: bedroom, parking: parking, roadsize: roadsize, longitude: longitude, latitude: latitude,view: view?? this.view,viewId: viewId);
+      })=>CategoryModel(image: image, id: id, nonveg: nonveg, name: name, description: description, status: status, isFavourite: isFavourite, rent: rent, address: address??this.address, date: date, type: type, landmark: landmark, floor: floor, negotiable: negotiable, roadtype: roadtype, furnishing: furnishing, buildupsqrft: buildupsqrft, phonenumber: phonenumber, kitchen: kitchen, bathroom: bathroom, bedroom: bedroom, parking: parking, roadsize: roadsize, longitude: longitude, latitude: latitude,view: view?? this.view,viewId: viewId,facebook: facebook);
 
 }

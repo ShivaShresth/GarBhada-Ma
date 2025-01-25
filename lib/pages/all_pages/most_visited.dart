@@ -64,7 +64,7 @@ class _MostVisitedState extends State<MostVisited> {
 
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: EdgeInsets.only(left: 6,bottom: 30),
       height: 306,
       
       child: GridView.builder(
@@ -107,14 +107,14 @@ class CategoryCard extends StatelessWidget {
       child: Container(
         width: 160,
         height: 360,
-        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5), // Reduced margin
+        margin: EdgeInsets.only(right: 14), // Reduced margin
         decoration: BoxDecoration(
           
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
-              spreadRadius: 3,
-              blurRadius: 3,
+              spreadRadius: 0,
+              blurRadius: 0,
               offset: Offset(2, 2),
             ),
           ],

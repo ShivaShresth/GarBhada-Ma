@@ -3,6 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:renthouse/Profile%20Screen/about_garbhadama.dart';
+import 'package:renthouse/Profile%20Screen/contact_team.dart';
+import 'package:renthouse/Profile%20Screen/privacy_policy.dart';
+import 'package:renthouse/Profile%20Screen/term_conditions.dart';
 import 'package:renthouse/pages/all_pages/alter_page.dart';
 import 'package:renthouse/pages/all_pages/order2.dart';
 import 'package:renthouse/pages/edit_profile.dart';
@@ -93,31 +97,37 @@ elevation: 0,
                     ),
                     ListTile(
                       onTap: () {
-                                                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Alter_Page()));
+                                                  Navigator.push(context,MaterialPageRoute(builder: (context)=>About_GarBhadama()));
 
                             // Routes.instance
                             // .push(widget: FavouriteScreen(), context: context);
                       },
                       leading: Icon(Icons.favorite_outline),
-                      title: Text("Favourite"),
-                    ),
-                    ListTile(
-                      onTap: () {},
-                      leading: Icon(Icons.info_outline),
-                      title: Text("About Us"),
+                      title: Text("About GarBhadama"),
                     ),
                     ListTile(
                       onTap: () {
-                        // Routes.instance
-                        //     .push(widget: ChangePassword(), context: context);
+                                                                          Navigator.push(context,MaterialPageRoute(builder: (context)=>PrivacyPolicy()));
+
                       },
-                      leading: Icon(Icons.change_circle),
-                      title: Text("Change Password"),
+                      leading: Icon(Icons.info_outline),
+                      title: Text("Privacy Policy"),
                     ),
                     ListTile(
-                      onTap: () {},
+                      onTap: () {
+               Navigator.push(context,MaterialPageRoute(builder: (context)=>Term_Conditions()));
+
+                      },
+                      leading: Icon(Icons.change_circle),
+                      title: Text("Term & Conditions"),
+                    ),
+                    ListTile(
+                      onTap: () {
+                                       Navigator.push(context,MaterialPageRoute(builder: (context)=>Contact_Team()));
+
+                      },
                       leading: Icon(Icons.support_outlined),
-                      title: Text("Support"),
+                      title: Text("Contact our team"),
                     ),
                     ListTile(
                       onTap: () {

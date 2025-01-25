@@ -40,6 +40,7 @@ class Upload_Data_Page extends StatefulWidget {
   String latitude;
   int view;
   String? viewId;
+  String? facebook;
   Upload_Data_Page({
     Key? key,
     required this.image,
@@ -67,6 +68,7 @@ class Upload_Data_Page extends StatefulWidget {
     required this.roadsize,
     required this.longitude,
     required this.latitude,
+    required this.facebook,
     this.view=0,
     this.viewId,
   }) : super(key: key);
@@ -166,6 +168,7 @@ CategoryModel categoryModel = CategoryModel(
   isFavourite: widget.isFavourite,
   id: widget.id, // Set the generated ID here
   view: widget.view,
+  facebook: widget.facebook,
   viewId: doc.id
 );
 print("heien${doc.id}");
@@ -891,6 +894,40 @@ await doc.set(categoryModel.toMap()).then((value) {
                                                     width: 150,
                                                     child: Text(
                                                       "${widget.roadsize}",
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
+                                        
+                                        SizedBox(
+                                          height: 0.4,
+                                        ),
+                                        Container(
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 8),
+                                          color: Colors.white,
+                                          width: 400,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                  width: 100,
+                                                  // color: Colors.pink,
+                                                  child: Text("Facebook->")),
+                                              Expanded(
+                                                child: Container(
+                                                    //  color: Colors.green,
+                                                    width: 150,
+                                                    child: Text(
+                                                      "${widget.facebook}",
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                     )),

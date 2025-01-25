@@ -25,22 +25,28 @@ class _Collect_PageState extends State<Collect_Page> {
         physics: NeverScrollableScrollPhysics(),
         child: Column(
           children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10,top: 14),
+                  child: Text("Top Room Rent",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14), ),
+                )),
             RecommendedHouse(),
             Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 30),
-                  child: Text("Recent"),
+                  padding: const EdgeInsets.only(left: 10,top: 14),
+                  child: Text("Recent",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                 )),
                 Recents(),
           //  Best_Offer(),
             PostRent(),
-            SizedBox(height: 10,),
+            SizedBox(height: 0,),
             Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 30),
-                  child: Text("Most Visited"),
+                  padding: const EdgeInsets.only(left: 10,top: 0,bottom: 6),
+                  child: Text("Most Visited",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                 )),
 
             MostVisited()

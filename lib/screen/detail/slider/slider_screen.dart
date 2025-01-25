@@ -60,7 +60,7 @@ class _SliderScreenState extends State<SliderScreen> {
           .collection("cat")
           .doc(user.uid)
           .collection("cats")
-          .doc(widget.categoryModel?.description);
+          .doc(widget.categoryModel?.viewId);
 
       DocumentSnapshot snapshot = await docRef.get();
 
@@ -75,7 +75,7 @@ class _SliderScreenState extends State<SliderScreen> {
           print("No valid data found in the document.");
         }
       } else {
-        print("No document found for category: ${widget.categoryModel?.description}");
+        print("No document found for category: ${widget.categoryModel?.viewId}");
       }
     } catch (e) {
       print("Error fetching data from Firestore: $e");

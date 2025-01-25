@@ -123,7 +123,7 @@ class _SearchInputState extends State<SearchInput> {
             onTap: (){  
 Navigator.push(context,MaterialPageRoute(builder: (context)=>Filter_Page()));
             },
-            child: Icon(Icons.filter))
+            child: Icon(Icons.filter_list))
         
           ]
         

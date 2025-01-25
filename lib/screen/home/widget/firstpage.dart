@@ -74,7 +74,7 @@ class _HomePagesState extends State<HomePages> {
   double getContainerHeight() {
     switch (current) {
       case 0: // Collect Page
-        return MediaQuery.of(context).size.height / 0.7;
+        return MediaQuery.of(context).size.height / 0.66;
       case 1: // Best Offer Page
         return MediaQuery.of(context).size.height / 1.5; // Example height
       case 2: // Recent Page

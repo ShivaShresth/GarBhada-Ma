@@ -22,7 +22,7 @@ borderRadius: BorderRadius.circular(10),
 color: Colors.blue
 ),
 height: 220,
-        width: width*0.9, 
+        width: width*0.95, 
         child:Column(  
           children: [  
             Row(  

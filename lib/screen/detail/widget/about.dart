@@ -10,8 +10,9 @@ import 'package:renthouse/model/category_model.dart';
 import 'package:renthouse/model/product_model.dart';
 import 'package:renthouse/provider/app_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 class About extends StatefulWidget {
-   final CategoryModel? categoryModel;
+  final CategoryModel? categoryModel;
 
   const About({super.key, this.categoryModel});
 
@@ -20,8 +21,7 @@ class About extends StatefulWidget {
 }
 
 class _AboutState extends State<About> {
-
-    List<CategoryModel> categoriesList = [];
+  List<CategoryModel> categoriesList = [];
   List<ProductModel> productModelList = [];
 
   @override
@@ -30,7 +30,7 @@ class _AboutState extends State<About> {
     appProvider.getUserInfoFirebase();
 
     getCategoryList();
-   
+
     super.initState();
   }
 
@@ -49,59 +49,59 @@ class _AboutState extends State<About> {
     setState(() {
       isLoading = false;
     });
-  }  
-  Uri dialnumber=Uri(scheme: 'tel',path:'1234567890');
-   
-   callnumber()async{  
+  }
+
+  Uri dialnumber = Uri(scheme: 'tel', path: '1234567890');
+
+  callnumber() async {
     await launchUrl(dialnumber);
-   }
+  }
 
-   directcall()async{   
-   // await FlutterPhoneDirectCaller.callNumber('1234567890');
-   }
+  directcall() async {
+    // await FlutterPhoneDirectCaller.callNumber('1234567890');
+  }
 
-   Position? _currentLocation;
-    late bool servicePermission = false;
-    late LocationPermission permission;
-     String? address1;
-    String _currentAddress = "";
-    Future<Position> _getCurrentLocation() async {
-      servicePermission = await Geolocator.isLocationServiceEnabled();
-      if (!servicePermission) {
-        print("Service disabled");
-      }
-      permission = await Geolocator.checkPermission();
-
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
-      return await Geolocator.getCurrentPosition();
+  Position? _currentLocation;
+  late bool servicePermission = false;
+  late LocationPermission permission;
+  String? address1;
+  String _currentAddress = "";
+  Future<Position> _getCurrentLocation() async {
+    servicePermission = await Geolocator.isLocationServiceEnabled();
+    if (!servicePermission) {
+      print("Service disabled");
     }
+    permission = await Geolocator.checkPermission();
 
-
-    _getAddressFromCoordinates()async{  
-      try{  
-        List<Placemark> placesmarks=await placemarkFromCoordinates(_currentLocation!.latitude, _currentLocation!.longitude);
-        Placemark place=placesmarks[0];
-          Placemark placemark = placesmarks.first;
-      String address = "${placemark.name}, ${placemark.locality}, ${placemark.country}";
-      
-
-        setState(() {
-          _currentAddress="${place.locality},${place.country}";
-address1=address;
-        });
-      }catch(e){ 
-        print(e);
-      }
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
     }
+    return await Geolocator.getCurrentPosition();
+  }
 
-    @override
- 
+  _getAddressFromCoordinates() async {
+    try {
+      List<Placemark> placesmarks = await placemarkFromCoordinates(
+          _currentLocation!.latitude, _currentLocation!.longitude);
+      Placemark place = placesmarks[0];
+      Placemark placemark = placesmarks.first;
+      String address =
+          "${placemark.name}, ${placemark.locality}, ${placemark.country}";
+
+      setState(() {
+        _currentAddress = "${place.locality},${place.country}";
+        address1 = address;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 10,right: 10,top: 10),
+      padding: EdgeInsets.only(left: 10, right: 10, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -112,28 +112,41 @@ address1=address;
           //       .headline1!
           //       .copyWith(fontSize: 20, fontWeight: FontWeight.bold),
           // ),
+SizedBox(height: 20,),
 
- ExpansionTile(
-  tilePadding: EdgeInsets.only(left: 6),
-        title: Text(
-          "About",
-          style: TextStyle(
-            decoration: TextDecoration.underline,
-            decorationColor: Colors.green, // Optional: Set the underline color
-            decorationThickness: 3,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        children: [
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              "Here is some information about the topic. This content will expand when the tile is tapped. You can put any content you like here.",
-              style: TextStyle(fontSize: 16),
+          Container(
+            decoration: BoxDecoration(  
+              border: Border.all()
+            ),
+            child: ExpansionTile(
+              tilePadding: EdgeInsets.only(left: 6,right: 6),
+              collapsedShape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              onExpansionChanged: (bool Expanded) {},
+              controlAffinity: ListTileControlAffinity.trailing,
+              title: Text(
+                "About",
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  decorationColor:
+                      Colors.green, // Optional: Set the underline color
+                  decorationThickness: 3,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              children: [
+                Divider(),
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text("${widget.categoryModel!.description}"),
+                ),
+              ],
             ),
           ),
-        ],),
 
           // Container(
           //   width:MediaQuery.of(context).size.width,
@@ -153,89 +166,98 @@ address1=address;
           //   ),
           // ),
 
-        
           // Text(
           //  // "${widget.categoryModel!.name}",
           //  "${widget.categoryModel!.description} hi",
-      
+
           // ),
-
-
-           ExpansionTile(
-              tilePadding: EdgeInsets.only(left: 6),
-
-        title: Text(
-          "Location",
-          style: TextStyle(
-            decoration: TextDecoration.underline,
-            decorationColor: Colors.green, // Optional: Set the underline color
-            decorationThickness: 3,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        children: [
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: GestureDetector(
-                onTap: ()async{  
-    //                   Future.delayed(Duration(seconds: 0),()async{   
-    //    _currentLocation = await _getCurrentLocation();
-    //               await _getAddressFromCoordinates();
-    // });
-                 //Navigator.push(context, MaterialPageRoute(builder: (context)=>GeolocationApp()));
-                    _currentLocation = await _getCurrentLocation();
-                  await _getAddressFromCoordinates();
-                  _launchMap();
-
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
-                  decoration: BoxDecoration(  
-                    border: Border.all(color: Colors.grey),
-                    
-                  ),
-                  child: Image.asset("assets/a.png")
+SizedBox(height: 20,),
+          Container(
+            decoration: BoxDecoration( 
+              border: Border.all()
+            ),
+            child: ExpansionTile(
+              tilePadding: EdgeInsets.only(left: 6,right: 6),
+              collapsedShape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              onExpansionChanged: (bool Expanded) {},
+              controlAffinity: ListTileControlAffinity.trailing,
+              title: Text(
+                "Location",
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  decorationColor:
+                      Colors.green, // Optional: Set the underline color
+                  decorationThickness: 3,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+              children: [
+                Divider(),
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      //                   Future.delayed(Duration(seconds: 0),()async{
+                      //    _currentLocation = await _getCurrentLocation();
+                      //               await _getAddressFromCoordinates();
+                      // });
+                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>GeolocationApp()));
+                      _currentLocation = await _getCurrentLocation();
+                      await _getAddressFromCoordinates();
+                      _launchMap();
+                    },
+                    child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: Image.asset("assets/a.png")),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ],),
-    //        GestureDetector(
-    //             onTap: ()async{  
-    // //                   Future.delayed(Duration(seconds: 0),()async{   
-    // //    _currentLocation = await _getCurrentLocation();
-    // //               await _getAddressFromCoordinates();
-    // // });
-    //              //Navigator.push(context, MaterialPageRoute(builder: (context)=>GeolocationApp()));
-    //                 _currentLocation = await _getCurrentLocation();
-    //               await _getAddressFromCoordinates();
-    //               _launchMap();
+          //        GestureDetector(
+          //             onTap: ()async{
+          // //                   Future.delayed(Duration(seconds: 0),()async{
+          // //    _currentLocation = await _getCurrentLocation();
+          // //               await _getAddressFromCoordinates();
+          // // });
+          //              //Navigator.push(context, MaterialPageRoute(builder: (context)=>GeolocationApp()));
+          //                 _currentLocation = await _getCurrentLocation();
+          //               await _getAddressFromCoordinates();
+          //               _launchMap();
 
-    //             },
-    //             child: Container(
-    //               padding: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
-    //               decoration: BoxDecoration(  
-    //                 border: Border.all(color: Colors.grey),
-                    
-    //               ),
-    //               child: Center(
-    //                 child: Text("Location",style: TextStyle( decoration: TextDecoration.underline,
-    //                     decorationColor: Colors.grey, // Optional: Set the underline color
-    //                     decorationThickness: 3, fontSize: 20,fontWeight: FontWeight.bold ),),
-    //               ),
-    //             ),
-    //           ),
+          //             },
+          //             child: Container(
+          //               padding: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+          //               decoration: BoxDecoration(
+          //                 border: Border.all(color: Colors.grey),
+
+          //               ),
+          //               child: Center(
+          //                 child: Text("Location",style: TextStyle( decoration: TextDecoration.underline,
+          //                     decorationColor: Colors.grey, // Optional: Set the underline color
+          //                     decorationThickness: 3, fontSize: 20,fontWeight: FontWeight.bold ),),
+          //               ),
+          //             ),
+          //           ),
         ],
       ),
     );
   }
 
-  
   Future<void> _launchMap() async {
     // Replace these coordinates with the desired location
     // double latitude = 37.7749;
     // double longitude = -122.4194;
-     double latitude = 27.69786;
+    double latitude = 27.69786;
     double longitude = 85.34729;
 
     //  double latitude = double.parse(widget.categoryModel!.latitude);

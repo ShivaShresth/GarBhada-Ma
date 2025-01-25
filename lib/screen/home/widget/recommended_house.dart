@@ -111,8 +111,8 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
               },
               child: Text("No categories available${categoriesList}")))
             : Container(
-                padding: EdgeInsets.all(15),
-                height: 360,
+                padding: EdgeInsets.only(left: 0,top: 6,bottom: 2),
+                height: 400,
                 color: Colors.white,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
@@ -143,7 +143,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                         );
                       },
                       child: Container(
-                        height: 310,
+                        height: 390,
                         width: 230,
                         padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
                         margin: EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
@@ -165,7 +165,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                               borderRadius: BorderRadius.all(Radius.circular(8)),
                               child: Image.network(
                                 category.image[0],
-                                height: 310,
+                                height: 390,
                                 width: 230,
                                 fit: BoxFit.cover,
                                 loadingBuilder: (context, child, loadingProgress) {

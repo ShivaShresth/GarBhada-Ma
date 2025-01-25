@@ -41,7 +41,8 @@ class _AddProductPageState extends State<AddProductPage> {
       phonenumber = "",
       description = "Not Avaliable",
       housename = "Not Avaliable",
-      landmark = "Not Avaliable";
+      landmark = "Not Avaliable",
+      facebook="Not Avaliable";
   TextEditingController addressController = TextEditingController();
   TextEditingController rentController = TextEditingController();
 
@@ -52,6 +53,7 @@ class _AddProductPageState extends State<AddProductPage> {
   TextEditingController buildsqrtftController = TextEditingController();
 
   TextEditingController phonenumberController = TextEditingController();
+  TextEditingController facebookController=TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController houseNameController = TextEditingController();
   TextEditingController landmarkController = TextEditingController();
@@ -1579,6 +1581,52 @@ class _AddProductPageState extends State<AddProductPage> {
                                       )),
                                 ],
                               ),
+
+                                SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.facebook),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(child: Text("FaceBook Link")),
+                                  Container(
+                                      //margin: EdgeInsets.only(bottom: 8),
+                                      padding: EdgeInsets.only(
+                                          top: 0, bottom: 1, left: 8),
+                                      height: 35,
+                                      width: 120,
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
+                                      child: Center(
+                                        child: TextFormField(
+                                         // keyboardType: TextInputType.number,
+                                          controller: facebookController,
+                                          // validator: (value) {
+                                          //   if (value == null ||
+                                          //       value.isEmpty) {
+                                          //     return "Phone Number Cannot be empty";
+                                          //   } else {
+                                          //     return null;
+                                          //   }
+                                          // },
+                                          decoration: InputDecoration(
+                                              hintText: "https/FaceBook Link",
+                                                    hintStyle: TextStyle(fontSize: 14),
+                                                                            border:InputBorder.none
+
+                                                    
+                                              //border: OutlineInputBorder()
+                                              ),
+                                        ),
+                                      )),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -1970,6 +2018,7 @@ class _AddProductPageState extends State<AddProductPage> {
                               description=descriptionController.text;
                               housename=houseNameController.text;
                               landmark=landmarkController.text;
+                              facebook=facebookController.text;
                               longitude==null?"${1}":"${2}";
                             
                               if(status=="Occupied"){  
@@ -2009,6 +2058,7 @@ class _AddProductPageState extends State<AddProductPage> {
 print("heils${floor.toString()}");
 Navigator.push(context,MaterialPageRoute(builder: (context)=>Upload_Data_Page( image: imageUrlss,
           landmark: landmark.toString().isEmpty?"Not Avaliable":"${landmark.toString()}",
+          facebook: facebook.toString().isEmpty?"Not Avaliable":"${facebook.toString()}",
           rent: rent.toString().isEmpty?"Not Avaliable":"${rent}" ,
           kitchen: number.toString().isEmpty?"Not Avaliable":"${number.toString()}",
           bathroom: number1.toString().isEmpty?"Not Avaliable":"${number1.toString()}",

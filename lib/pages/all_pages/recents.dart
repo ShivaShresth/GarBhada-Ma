@@ -111,7 +111,8 @@ class _RecentsState extends State<Recents> {
 
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: EdgeInsets.only(left: 6,top: 4),
+     // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       height: 306,
       
       child: GridView.builder(
@@ -156,7 +157,7 @@ class CategoryCard extends StatelessWidget {
       child: Container(
         width: cardWidth,
         height: 160,
-        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5), // Reduced margin
+        margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5), // Reduced margin
         decoration: BoxDecoration(
           
           boxShadow: [
@@ -179,7 +180,7 @@ class CategoryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: 133,
+                      height: 140,
                       width: 120,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),

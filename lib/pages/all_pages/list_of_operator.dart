@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:renthouse/firebase_firestore/firebase_firestore.dart';
 import 'package:renthouse/model/category_model.dart';
 import 'package:renthouse/model/product_model.dart';
+import 'package:renthouse/pages/all_pages/facebook_url.dart';
 import 'package:renthouse/provider/app_provider.dart';
 
 class List_Of_Operator extends StatefulWidget {
@@ -93,12 +94,17 @@ class _List_Of_OperatorState extends State<List_Of_Operator> {
                           child: Row(
                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: CircleAvatar(
-                                  
-                                  radius: 20,
-                                  backgroundImage:NetworkImage("https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg"),
+                              InkWell(
+                                onTap: (){  
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>OpenFacebook(categoryModel: widget.categoryModel,)));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: CircleAvatar(
+                                    
+                                    radius: 20,
+                                    backgroundImage:NetworkImage("https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg"),
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 10,),
