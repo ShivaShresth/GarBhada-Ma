@@ -145,6 +145,8 @@ class CategoryCard extends StatelessWidget {
                     children: [
                       Container(
                        
+
+                       
                       
                         
                         height: 160,
