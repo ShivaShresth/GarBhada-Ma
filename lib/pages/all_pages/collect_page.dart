@@ -35,7 +35,7 @@ class _Collect_PageState extends State<Collect_Page> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 10,top: 14),
+                  padding: const EdgeInsets.only(left: 14,top: 14),
                   child: Text("Recent",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                 )),
                 Recents(),

@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -11,7 +10,6 @@ import 'package:renthouse/pages/all_pages/alter_page.dart';
 import 'package:renthouse/pages/all_pages/order2.dart';
 import 'package:renthouse/pages/edit_profile.dart';
 
-
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
 
@@ -22,6 +20,7 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
     // AppProvider appProvider = Provider.of<AppProvider>(
     //   context,
     // );
@@ -29,125 +28,143 @@ class _AccountScreenState extends State<AccountScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(
-          "Profile",
-          style: TextStyle(color: Colors.black),
+        title: Align(
+          alignment: Alignment.topLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 0),
+            child: Text(
+              "Settings",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28),
+            ),
+          ),
         ),
         centerTitle: true,
-elevation: 0,
+        elevation: 0,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.only(bottom: 1, top: 4),
-                child: Column(
+          child: Container(
+            height: height,
+            decoration: BoxDecoration(  
+              color: Colors.white
+            ),
+           // padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                   // appProvider.getUserInformation.image == null
-                        // ? Icon(
-                        //     Icons.person_outline,
-                        //     size: 120,
-                        //   )
-                        // : 
-                        
-                        // CircleAvatar(
-                        //     backgroundImage: NetworkImage(
-                        //         //appProvider.getUserInformation.image!
-                        //         ),
-                        //     radius: 70,
-                        //   ),
-                        Icon(Icons.person,size: 150,),
-                    Text("Bikram Kumar Shrestha",
-                     // appProvider.getUserInformation.name,
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Align(
+                          alignment: Alignment.topLeft, child: Text("MeanWhile",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
                     ),
-                    Text("Flutter Developer",
-                      //appProvider.getUserInformation.email,
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 14,
-                    ),
-                    SizedBox(
-                      width: 130,
-                      // child: PrimaryButton(
-                      //   title: "Edit Profile",
-                      //   onPressed: () {
-                      //     Routes.instance
-                      //         .push(widget: EditProfile(), context: context);
-                      //   },
-                      // ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Icon(Icons.person,size: 80,),
                     ),
                   ],
                 ),
-              ),
-              Container(
-                child: Column(
-                  children: [
-                    ListTile(
-                      onTap: () {},
-                      leading: Icon(Icons.shopping_bag_outlined),
-                      title: GestureDetector(
-                        onTap: (){ 
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>Edit_Page()));
+                SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  child: Column(
+                    children: [
+                      Divider(),
+                      ListTile(
+                        onTap: () {},
+                        leading: Icon(Icons.edit),
+                        title: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Edit_Page()));
+                            },
+                            child: Text("Edit")),
+                      ),
+                      Divider(),
+                      ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => About_GarBhadama()));
+            
+                          // Routes.instance
+                          // .push(widget: FavouriteScreen(), context: context);
                         },
-                        child: Text("Edit")),
-                    ),
-                    ListTile(
-                      onTap: () {
-                                                  Navigator.push(context,MaterialPageRoute(builder: (context)=>About_GarBhadama()));
-
-                            // Routes.instance
-                            // .push(widget: FavouriteScreen(), context: context);
-                      },
-                      leading: Icon(Icons.favorite_outline),
-                      title: Text("About GarBhadama"),
-                    ),
-                    ListTile(
-                      onTap: () {
-                                                                          Navigator.push(context,MaterialPageRoute(builder: (context)=>PrivacyPolicy()));
-
-                      },
-                      leading: Icon(Icons.info_outline),
-                      title: Text("Privacy Policy"),
-                    ),
-                    ListTile(
-                      onTap: () {
-               Navigator.push(context,MaterialPageRoute(builder: (context)=>Term_Conditions()));
-
-                      },
-                      leading: Icon(Icons.change_circle),
-                      title: Text("Term & Conditions"),
-                    ),
-                    ListTile(
-                      onTap: () {
-                                       Navigator.push(context,MaterialPageRoute(builder: (context)=>Contact_Team()));
-
-                      },
-                      leading: Icon(Icons.support_outlined),
-                      title: Text("Contact our team"),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        FirebaseAuth.instance.signOut();
-                        setState(() {});
-                      },
-                      leading: Icon(Icons.exit_to_app),
-                      title: Text("Log Out"),
-                    ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Text("Version 1.0.0"),
-                    SizedBox(
-                      height: 14,
-                    ),
-                  ],
-                ),
-              )
-            ],
+                        leading: Icon(Icons.house_outlined),
+                        title: Text("About GarBhadama"),
+                      ),
+                                          Divider(),
+            
+                      ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PrivacyPolicy()));
+                        },
+                        leading: Icon(Icons.privacy_tip_outlined),
+                        title: Text("Privacy Policy"),
+                      ),
+                                          Divider(),
+            
+                      ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Term_Conditions()));
+                        },
+                        leading: Icon(Icons.list_alt_outlined),
+                        title: Text("Term & Conditions"),
+                      ),
+                                          Divider(),
+            
+                      ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Contact_Team()));
+                        },
+                        leading: Icon(Icons.email_outlined),
+                        title: Text("Contact our team"),
+                      ),
+                                          Divider(),
+            
+                      ListTile(
+                        onTap: () {
+                          FirebaseAuth.instance.signOut();
+                          setState(() {});
+                        },
+                        leading: Icon(Icons.exit_to_app),
+                        title: Text("Log Out"),
+                      ),
+                                          Divider(),
+            
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Text("Version 1.0.0"),
+                      SizedBox(
+                        height: 14,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

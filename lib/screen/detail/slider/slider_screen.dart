@@ -84,6 +84,7 @@ class _SliderScreenState extends State<SliderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -140,7 +141,7 @@ class _SliderScreenState extends State<SliderScreen> {
                   ),
                 ),
                 Positioned(
-                  bottom: 10,
+                  bottom: 20,
                   left: 0,
                   right: 0,
                   child: Row(

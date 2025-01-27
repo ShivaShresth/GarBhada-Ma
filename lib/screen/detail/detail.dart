@@ -83,7 +83,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ),
           Positioned(
-            bottom: 20,
+            bottom: 0,
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: 60,
@@ -97,7 +97,7 @@ class _DetailPageState extends State<DetailPage> {
                     onTap: () {
                       launchUrl(whatApp);
                     },
-                    child: Icon(Icons.whatshot),
+                    child: Image.asset("assets/whatapp.png"),
                   ),
                   SizedBox(
                     width: 20,
@@ -128,7 +128,9 @@ class _DetailPageState extends State<DetailPage> {
 
                         // launchEmail('example@example.com', 'Hello!', 'This is a test email body.');
                       },
-                      child: Icon(Icons.email)),
+                      child: Image.asset("assets/gmail.png")
+                      
+                      ),
                   SizedBox(
                     width: 20,
                   ),
@@ -142,7 +144,9 @@ class _DetailPageState extends State<DetailPage> {
               dialNumber = Uri(scheme: 'tel', path: number!);
               callNumber();
                     },
-                    child: Icon(Icons.phone)),
+                    child: Image.asset("assets/call.webp",height: 50)
+                    
+                    ),
                   SizedBox(
                     width: 20,
                   ),
@@ -161,7 +165,7 @@ class _DetailPageState extends State<DetailPage> {
                         print("show dialog: cannot launch this url");
                       }
                     },
-                    child: Icon(Icons.message),
+                    child: Image.asset("assets/message.png",height: 50,),
                   ),
                   SizedBox(
                     width: 20,

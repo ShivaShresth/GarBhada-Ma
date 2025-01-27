@@ -67,10 +67,10 @@ class _Contact_TeamState extends State<Contact_Team> {
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                               decoration: BoxDecoration(  
-                                border: Border.all(),
                                 borderRadius: BorderRadius.circular(100)
                               ),
-                              child: Icon(Icons.phone)),
+                              child: Image.asset('assets/call.webp',height: 50,)
+                              ),
                           ),
                           InkWell(
                             onTap: ()async{  
@@ -88,10 +88,10 @@ class _Contact_TeamState extends State<Contact_Team> {
                             child: Container(
                                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                               decoration: BoxDecoration(  
-                                border: Border.all(),
                                 borderRadius: BorderRadius.circular(100)
                               ),
-                              child: Icon(Icons.message)),
+                              child: Image.asset('assets/message.png',height: 50,)
+                              ),
                           ),
                           InkWell(
                             onTap: (){ 
@@ -101,10 +101,10 @@ class _Contact_TeamState extends State<Contact_Team> {
                             child: Container(
                                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                               decoration: BoxDecoration(  
-                                border: Border.all(),
                                 borderRadius: BorderRadius.circular(100)
                               ),
-                              child: Icon(Icons.whatshot)),
+                              child: Image.asset('assets/whatapp.png',height: 50,)
+                              ),
                           ),
                           InkWell(
                             onTap: (){  
@@ -131,10 +131,10 @@ class _Contact_TeamState extends State<Contact_Team> {
                             child: Container(
                                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                               decoration: BoxDecoration(  
-                                border: Border.all(),
                                 borderRadius: BorderRadius.circular(100)
                               ),
-                              child: Icon(Icons.email)),
+                              child: Image.asset('assets/gmail.png',height: 50,)
+                              ),
                           )
                         ],
                       )

@@ -151,9 +151,9 @@ Future<void> _initialize() async {
 
    @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return Center(child: CircularProgressIndicator());
-    }
+    // if (isLoading) {
+    //   return Center(child: CircularProgressIndicator());
+    // }
     if (categoriesList.isEmpty) {
       return Center(child: Text("No categories available"));
     }

@@ -42,7 +42,7 @@ class _AddProductPageState extends State<AddProductPage> {
       description = "Not Avaliable",
       housename = "Not Avaliable",
       landmark = "Not Avaliable",
-      facebook="Not Avaliable";
+      facebook = "Not Avaliable";
   TextEditingController addressController = TextEditingController();
   TextEditingController rentController = TextEditingController();
 
@@ -53,14 +53,14 @@ class _AddProductPageState extends State<AddProductPage> {
   TextEditingController buildsqrtftController = TextEditingController();
 
   TextEditingController phonenumberController = TextEditingController();
-  TextEditingController facebookController=TextEditingController();
+  TextEditingController facebookController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController houseNameController = TextEditingController();
   TextEditingController landmarkController = TextEditingController();
-      FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    late CollectionReference productCollection=firestore.collection('categories');
-
+  late CollectionReference productCollection =
+      firestore.collection('categories');
 
   // Image_Picker imagePicker1 = Image_Picker();
 
@@ -93,14 +93,14 @@ class _AddProductPageState extends State<AddProductPage> {
   String? negitoble;
   String? nonveg;
   String? status;
-  String statuss="";
+  String statuss = "";
   String? roadtype;
   String? furnishing;
   String? type;
-  double longitude=0;
-  double latitude=0;
-  bool Status=false;
-  int view=0;
+  double longitude = 0;
+  double latitude = 0;
+  bool Status = false;
+  int view = 0;
 
   // final ImagePicker imagePicker = ImagePicker();
   // List<XFile> imageFileList = [];
@@ -296,8 +296,7 @@ class _AddProductPageState extends State<AddProductPage> {
           // price: 10,
           isFavourite: true,
           id: '1',
-          view: view
-          );
+          view: view);
       await FirebaseFirestore.instance
           .collection('categories')
           .add(categoryModel.toMap())
@@ -617,9 +616,9 @@ class _AddProductPageState extends State<AddProductPage> {
                         Container(
                             padding:
                                 EdgeInsets.only(top: 5, left: 10, right: 10),
-                            height: MediaQuery.of(context).size.height/0.64,
+                            height: MediaQuery.of(context).size.height / 0.6,
                             width: MediaQuery.of(context).size.height,
-                           // color: Colors.white,
+                            // color: Colors.white,
                             child: Column(
                               children: [
                                 Container(
@@ -638,6 +637,63 @@ class _AddProductPageState extends State<AddProductPage> {
                                       ]),
                                   child: Column(
                                     children: [
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.location_city),
+                                            SizedBox(width: 10),
+                                            Expanded(child: Text("Address")),
+                                            MaterialButton(
+                                              
+                                              minWidth: 120,
+                                              color: Colors.blue,
+                                              onPressed: () async {
+                                                showAddressDialog(context);
+                                        
+                                                _currentLocation =
+                                                    await _getCurrentLocation();
+                                                await _getAddressFromCoordinates();
+                                                setState(() {
+                                                  a = _currentLocation ==
+                                                      null; // Update 'a' based on whether location is available
+                                                  longitude =
+                                                      _currentLocation!.longitude;
+                                                  latitude =
+                                                      _currentLocation!.latitude;
+                                                  b = false;
+                                                });
+                                                Navigator.of(context,
+                                                        rootNavigator: true)
+                                                    .pop();
+                                              },
+                                              child: b
+                                                  ? Text("Press me")
+                                                  : Column(
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            // Text("Latitude= ",
+                                                            //     style: TextStyle(
+                                                            //         fontSize: 9,
+                                                            //         fontWeight:
+                                                            //             FontWeight
+                                                            //                 .bold)),
+                                                            Text(
+                                                              "${_currentAddress}",
+                                                              style: TextStyle(
+                                                                  fontSize: 10),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .clip,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                       Row(
                                         children: [
                                           Icon(Icons.location_city),
@@ -658,9 +714,7 @@ class _AddProductPageState extends State<AddProductPage> {
                                                       BorderRadius.circular(4)),
                                               child: Center(
                                                 child: TextFormField(
-                                                  controller:
-                                                      addressController,
-                                                      
+                                                  controller: addressController,
                                                   validator: (value) {
                                                     if (value == null ||
                                                         value.isEmpty) {
@@ -670,9 +724,10 @@ class _AddProductPageState extends State<AddProductPage> {
                                                     }
                                                   },
                                                   decoration: InputDecoration(
-                                                    hintText: "Enter Address",
-                                                    hintStyle: TextStyle(fontSize: 14),
-                                                    border:InputBorder.none
+                                                      hintText: "Enter Address",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 14),
+                                                      border: InputBorder.none
                                                       //border: OutlineInputBorder()
                                                       ),
                                                 ),
@@ -702,7 +757,8 @@ class _AddProductPageState extends State<AddProductPage> {
                                                       BorderRadius.circular(4)),
                                               child: Center(
                                                 child: TextFormField(
-                                                  keyboardType: TextInputType.number,
+                                                  keyboardType:
+                                                      TextInputType.number,
                                                   controller: rentController,
                                                   validator: (value) {
                                                     if (value == null ||
@@ -713,9 +769,10 @@ class _AddProductPageState extends State<AddProductPage> {
                                                     }
                                                   },
                                                   decoration: InputDecoration(
-                                                       hintText: "Enter Amount",
-                                                    hintStyle: TextStyle(fontSize: 14),
-                                                    border:InputBorder.none
+                                                      hintText: "Enter Amount",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 14),
+                                                      border: InputBorder.none
                                                       //border: OutlineInputBorder()
                                                       ),
                                                 ),
@@ -1135,8 +1192,7 @@ class _AddProductPageState extends State<AddProductPage> {
                                             minWidth: 120,
                                             color: Colors.blue,
                                             onPressed: () async {
-                                            showMapLoaderDialog(context);
-
+                                              showMapLoaderDialog(context);
 
                                               _currentLocation =
                                                   await _getCurrentLocation();
@@ -1150,8 +1206,9 @@ class _AddProductPageState extends State<AddProductPage> {
                                                     _currentLocation!.latitude;
                                                 b = false;
                                               });
-                                           Navigator.of(context,rootNavigator: true).pop();
-
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop();
                                             },
                                             child: b
                                                 ? Text("Press me")
@@ -1294,8 +1351,6 @@ class _AddProductPageState extends State<AddProductPage> {
                                       //     TextFormField()
                                       //   ],
                                       // )
-
-                                      
                                     ],
                                   ),
                                 ),
@@ -1305,373 +1360,390 @@ class _AddProductPageState extends State<AddProductPage> {
                                 ),
 
                                 Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  spreadRadius: 5,
-                                  blurRadius: 6,
-                                  offset: Offset(2, 2),
-                                )
-                              ]),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.house_outlined),
-                                  SizedBox(
-                                    width: 10,
+                                  margin: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 20),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          spreadRadius: 5,
+                                          blurRadius: 6,
+                                          offset: Offset(2, 2),
+                                        )
+                                      ]),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(Icons.house_outlined),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(child: Text("House Name")),
+                                          Container(
+                                              //margin: EdgeInsets.only(bottom: 8),
+                                              padding: EdgeInsets.only(
+                                                  top: 0, bottom: 1, left: 8),
+                                              height: 35,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Center(
+                                                child: TextFormField(
+                                                  controller:
+                                                      houseNameController,
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return "House Name Cannot be empty";
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      hintText:
+                                                          "House/Owner name",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 12),
+                                                      border: InputBorder.none
+                                                      //border: OutlineInputBorder()
+                                                      ),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.location_city),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(child: Text("Floor")),
+                                          Container(
+                                              //margin: EdgeInsets.only(bottom: 8),
+                                              padding: EdgeInsets.only(
+                                                  top: 0, bottom: 1, left: 8),
+                                              height: 35,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Center(
+                                                child: TextFormField(
+                                                  controller: floorController,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return "Floor Cannot be empty";
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      hintText:
+                                                          "Ex:- 1,2,3,4 Floor",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 14),
+                                                      border: InputBorder.none
+                                                      //border: OutlineInputBorder()
+                                                      ),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.landscape),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(child: Text("Road Size")),
+                                          Container(
+                                              //margin: EdgeInsets.only(bottom: 8),
+                                              padding: EdgeInsets.only(
+                                                  top: 0, bottom: 1, left: 8),
+                                              height: 35,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Center(
+                                                child: TextFormField(
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  controller:
+                                                      roadsizeController,
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return "Road Size Cannot be empty";
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      hintText: "Ex:- 10 meter",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 14),
+                                                      border: InputBorder.none
+                                                      //border: OutlineInputBorder()
+                                                      ),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.location_city),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(child: Text("Build Sqrtft")),
+                                          Container(
+                                              //margin: EdgeInsets.only(bottom: 8),
+                                              padding: EdgeInsets.only(
+                                                  top: 0, bottom: 1, left: 6),
+                                              height: 35,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Center(
+                                                child: TextFormField(
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  controller:
+                                                      buildsqrtftController,
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return "Build Sqrtft Cannot be empty";
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      hintText: "Ex:- 123 Feet",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 14),
+                                                      border: InputBorder.none),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.landscape_rounded),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(child: Text("Land Mark")),
+                                          Container(
+                                              //margin: EdgeInsets.only(bottom: 8),
+                                              padding: EdgeInsets.only(
+                                                  top: 0, bottom: 1, left: 8),
+                                              height: 35,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Center(
+                                                child: TextFormField(
+                                                  controller:
+                                                      landmarkController,
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return "Land Mark Cannot be empty";
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      hintText: "Popular Place",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 14),
+                                                      border: InputBorder.none),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.mobile_friendly),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(child: Text("Phone Number")),
+                                          Container(
+                                              //margin: EdgeInsets.only(bottom: 8),
+                                              padding: EdgeInsets.only(
+                                                  top: 0, bottom: 1, left: 8),
+                                              height: 35,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Center(
+                                                child: TextFormField(
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  controller:
+                                                      phonenumberController,
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return "Phone Number Cannot be empty";
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      hintText: "981234......",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 14),
+                                                      border: InputBorder.none
+
+                                                      //border: OutlineInputBorder()
+                                                      ),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.facebook),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                              child: Text("FaceBook Link")),
+                                          Container(
+                                              //margin: EdgeInsets.only(bottom: 8),
+                                              padding: EdgeInsets.only(
+                                                  top: 0, bottom: 1, left: 8),
+                                              height: 35,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Center(
+                                                child: TextFormField(
+                                                  // keyboardType: TextInputType.number,
+                                                  controller:
+                                                      facebookController,
+                                                  // validator: (value) {
+                                                  //   if (value == null ||
+                                                  //       value.isEmpty) {
+                                                  //     return "Phone Number Cannot be empty";
+                                                  //   } else {
+                                                  //     return null;
+                                                  //   }
+                                                  // },
+                                                  decoration: InputDecoration(
+                                                      hintText:
+                                                          "https/FaceBook Link",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 14),
+                                                      border: InputBorder.none
+
+                                                      //border: OutlineInputBorder()
+                                                      ),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  Expanded(child: Text("House Name")),
-                                  Container(
-                                      //margin: EdgeInsets.only(bottom: 8),
-                                      padding: EdgeInsets.only(
-                                          top: 0, bottom: 1, left: 8),
-                                      height: 35,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      child: Center(
-                                        child: TextFormField(
-                                          controller: houseNameController,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return "House Name Cannot be empty";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          decoration: InputDecoration(
-                                               hintText: "House/Owner name",
-                                                    hintStyle: TextStyle(fontSize: 12),
-                                                    border:InputBorder.none
-                                              //border: OutlineInputBorder()
-                                              ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.location_city),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(child: Text("Floor")),
-                                  Container(
-                                      //margin: EdgeInsets.only(bottom: 8),
-                                      padding: EdgeInsets.only(
-                                          top: 0, bottom: 1, left: 8),
-                                      height: 35,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      child: Center(
-                                        child: TextFormField(
-                                          controller: floorController,
-                                          keyboardType: TextInputType.number,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return "Floor Cannot be empty";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          decoration: InputDecoration(
-                                              hintText: "Ex:- 1,2,3,4 Floor",
-                                                    hintStyle: TextStyle(fontSize: 14),
-                                                    border:InputBorder.none
-                                              //border: OutlineInputBorder()
-                                              ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.landscape),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(child: Text("Road Size")),
-                                  Container(
-                                      //margin: EdgeInsets.only(bottom: 8),
-                                      padding: EdgeInsets.only(
-                                          top: 0, bottom: 1, left: 8),
-                                      height: 35,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      child: Center(
-                                        child: TextFormField(
-                                                                                      keyboardType: TextInputType.number,
-
-                                          controller: roadsizeController,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return "Road Size Cannot be empty";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          decoration: InputDecoration(
-                                              hintText: "Ex:- 10 meter",
-                                                    hintStyle: TextStyle(fontSize: 14),
-                                                    border:InputBorder.none
-                                              //border: OutlineInputBorder()
-                                              ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.location_city),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(child: Text("Build Sqrtft")),
-                                  Container(
-                                      //margin: EdgeInsets.only(bottom: 8),
-                                      padding: EdgeInsets.only(
-                                          top: 0, bottom: 1, left: 6),
-                                      height: 35,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      child: Center(
-                                        child: TextFormField(
-                                                                                      keyboardType: TextInputType.number,
-
-                                          controller: buildsqrtftController,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return "Build Sqrtft Cannot be empty";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          decoration: InputDecoration(
-                                              hintText: "Ex:- 123 Feet",
-                                                    hintStyle: TextStyle(fontSize: 14),
-                                              border:InputBorder.none
-
-                                              ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.landscape_rounded),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(child: Text("Land Mark")),
-                                  Container(
-                                      //margin: EdgeInsets.only(bottom: 8),
-                                      padding: EdgeInsets.only(
-                                          top: 0, bottom: 1, left: 8),
-                                      height: 35,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      child: Center(
-                                        child: TextFormField(
-                                          controller: landmarkController,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return "Land Mark Cannot be empty";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          decoration: InputDecoration(
-                                              hintText: "Popular Place",
-                                                    hintStyle: TextStyle(fontSize: 14),
-                                                                                                  border:InputBorder.none
-
-                                              ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.mobile_friendly),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(child: Text("Phone Number")),
-                                  Container(
-                                      //margin: EdgeInsets.only(bottom: 8),
-                                      padding: EdgeInsets.only(
-                                          top: 0, bottom: 1, left: 8),
-                                      height: 35,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      child: Center(
-                                        child: TextFormField(
-                                          keyboardType: TextInputType.number,
-                                          controller: phonenumberController,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return "Phone Number Cannot be empty";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          decoration: InputDecoration(
-                                              hintText: "981234......",
-                                                    hintStyle: TextStyle(fontSize: 14),
-                                                                            border:InputBorder.none
-
-                                                    
-                                              //border: OutlineInputBorder()
-                                              ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-
-                                SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.facebook),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(child: Text("FaceBook Link")),
-                                  Container(
-                                      //margin: EdgeInsets.only(bottom: 8),
-                                      padding: EdgeInsets.only(
-                                          top: 0, bottom: 1, left: 8),
-                                      height: 35,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      child: Center(
-                                        child: TextFormField(
-                                         // keyboardType: TextInputType.number,
-                                          controller: facebookController,
-                                          // validator: (value) {
-                                          //   if (value == null ||
-                                          //       value.isEmpty) {
-                                          //     return "Phone Number Cannot be empty";
-                                          //   } else {
-                                          //     return null;
-                                          //   }
-                                          // },
-                                          decoration: InputDecoration(
-                                              hintText: "https/FaceBook Link",
-                                                    hintStyle: TextStyle(fontSize: 14),
-                                                                            border:InputBorder.none
-
-                                                    
-                                              //border: OutlineInputBorder()
-                                              ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(height: 20,),
-
-                          Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          padding: EdgeInsets.only(top: 10,left: 15,right: 15),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  spreadRadius: 5,
-                                  blurRadius: 6,
-                                  offset: Offset(2, 2),
-                                )
-                              ]),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text("Description")),
-                                SizedBox(
-                                  height: 10,
                                 ),
+
+                                SizedBox(
+                                  height: 20,
+                                ),
+
                                 Container(
-                                    color: Colors.white,
-                                    height: 160,
-                                    width: double.infinity,
-                                    child: TextField(
-                                      controller: descriptionController,
-                                      maxLines: 5,
-                                      decoration: InputDecoration(
-                                          hintText: "Enter the Full Detail.......",
-                                                      hintStyle: TextStyle(fontSize: 14),
-                                          border: OutlineInputBorder()),
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
+                                  margin: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 15, right: 15),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          spreadRadius: 5,
+                                          blurRadius: 6,
+                                          offset: Offset(2, 2),
+                                        )
+                                      ]),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Text("Description")),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                            color: Colors.white,
+                                            height: 160,
+                                            width: double.infinity,
+                                            child: TextField(
+                                              controller: descriptionController,
+                                              maxLines: 5,
+                                              decoration: InputDecoration(
+                                                  hintText:
+                                                      "Enter the Full Detail.......",
+                                                  hintStyle:
+                                                      TextStyle(fontSize: 14),
+                                                  border: OutlineInputBorder()),
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ],
                             )),
                         SizedBox(
@@ -1947,7 +2019,6 @@ class _AddProductPageState extends State<AddProductPage> {
                         //                             hintStyle: TextStyle(fontSize: 14),
                         //                                                     border:InputBorder.none
 
-                                                    
                         //                       //border: OutlineInputBorder()
                         //                       ),
                         //                 ),
@@ -2005,99 +2076,134 @@ class _AddProductPageState extends State<AddProductPage> {
                         MaterialButton(
                           color: Colors.blue,
                           onPressed: () async {
-
-                         List<String?> imageUrlss = await _uploadFiles();
+                            List<String?> imageUrlss = await _uploadFiles();
 
                             setState(() {
                               address = addressController.text;
-                              phonenumber=phonenumberController.text;
-                              rent=rentController.text;
-                              floor=floorController.text;
-                              roadsize=roadsizeController.text;
-                              buildsqrt=buildsqrtftController.text;
-                              description=descriptionController.text;
-                              housename=houseNameController.text;
-                              landmark=landmarkController.text;
-                              facebook=facebookController.text;
-                              longitude==null?"${1}":"${2}";
-                            
-                              if(status=="Occupied"){  
-                                Status=false;
-                                                              print("heloses it ok");
+                              phonenumber = phonenumberController.text;
+                              rent = rentController.text;
+                              floor = floorController.text;
+                              roadsize = roadsizeController.text;
+                              buildsqrt = buildsqrtftController.text;
+                              description = descriptionController.text;
+                              housename = houseNameController.text;
+                              landmark = landmarkController.text;
+                              facebook = facebookController.text;
+                              longitude == null ? "${1}" : "${2}";
 
-                              }else{  
-                                Status=true;
-                               print("why it ok");
-
+                              if (status == "Occupied") {
+                                Status = false;
+                                print("heloses it ok");
+                              } else {
+                                Status = true;
+                                print("why it ok");
                               }
 
-
                               print("heloses${longitude}");
-                             
                             });
 
                             print("helso${latitude}");
-                             if(imageUrlss.isEmpty){  
+                            if (imageUrlss.isEmpty) {
                               showMessage("Image Cannot be Empty");
-                            }
-                                else if ( address.isEmpty ) {
+                            } else if (address.isEmpty) {
                               showMessage("Address Cannot be Empty");
-                            }else if(phonenumber.isEmpty){  
+                            } else if (phonenumber.isEmpty) {
                               showMessage("PhoneNumber Cannot be Empty");
+                            } else {
+                              FirebaseFirestore firestore =
+                                  FirebaseFirestore.instance;
+                              DocumentReference doc = productCollection.doc();
+                              User? user = FirebaseAuth.instance.currentUser;
 
+                              print("heils${floor.toString()}");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Upload_Data_Page(
+                                            image: imageUrlss,
+                                            landmark:
+                                                landmark.toString().isEmpty
+                                                    ? "Not Avaliable"
+                                                    : "${landmark.toString()}",
+                                            facebook:
+                                                facebook.toString().isEmpty
+                                                    ? "Not Avaliable"
+                                                    : "${facebook.toString()}",
+                                            rent: rent.toString().isEmpty
+                                                ? "Not Avaliable"
+                                                : "${rent}",
+                                            kitchen: number.toString().isEmpty
+                                                ? "Not Avaliable"
+                                                : "${number.toString()}",
+                                            bathroom: number1.toString().isEmpty
+                                                ? "Not Avaliable"
+                                                : "${number1.toString()}",
+                                            bedroom: number2.toString().isEmpty
+                                                ? "Not Avaliable"
+                                                : "${number2.toString()}",
+                                            parking: parking == null
+                                                ? "Not Avaliable"
+                                                : "${parking.toString()}",
+                                            negotiable: negitoble == null
+                                                ? "Not Avaliable"
+                                                : "${negitoble.toString()}",
+                                            name: housename.toString().isEmpty
+                                                ? "Not Avaliable"
+                                                : "${housename.toString()}",
+                                            nonveg: nonveg == null
+                                                ? "Not Avaliable"
+                                                : "${nonveg.toString()}",
+                                            date: date.toString(),
+                                            status: status == null
+                                                ? "Not Avaliable"
+                                                : "${status.toString()}",
+                                            longitude: longitude.toString(),
+                                            latitude: latitude.toString(),
+                                            floor: floorController.text
+                                                    .toString()
+                                                    .isEmpty
+                                                ? "Not Avaliable"
+                                                : "${floor.toString()}",
+                                            roadtype: roadtype == null
+                                                ? "Not Avaliable"
+                                                : "${roadtype.toString()}",
+                                            type: type == null
+                                                ? "Not Avaliable"
+                                                : "${type.toString()}",
+                                            furnishing: furnishing == null
+                                                ? "Not Avaliable"
+                                                : "${furnishing.toString().toLowerCase()}",
+                                            roadsize: roadsize.isEmpty
+                                                ? "Not Avaliable"
+                                                : "${roadsize.toString()}",
+                                            buildupsqrft: buildsqrtftController
+                                                    .text
+                                                    .toString()
+                                                    .isEmpty
+                                                ? "Not Avaliable"
+                                                : "${buildsqrt.toString()}",
+                                            phonenumber: phonenumberController
+                                                .text
+                                                .toString(),
+                                            description: descriptionController
+                                                    .text
+                                                    .toString()
+                                                    .isEmpty
+                                                ? "Not Avaliable"
+                                                : "${description.toString()}",
+                                            address: addressController.text
+                                                    .toString()
+                                                    .toLowerCase()
+                                                    .isEmpty
+                                                ? "Not Avaliable"
+                                                : "${address.toString()}",
+                                            // price: 10,
+                                            isFavourite: Status,
+                                            id: user!.uid,
+                                            view: view,
+                                            viewId: doc.id,
+                                          )));
                             }
-
-                            
-                            
-                            else{ 
-      FirebaseFirestore firestore = FirebaseFirestore.instance;
-      DocumentReference doc = productCollection.doc();
-     User? user = FirebaseAuth.instance.currentUser;
-
- 
-print("heils${floor.toString()}");
-Navigator.push(context,MaterialPageRoute(builder: (context)=>Upload_Data_Page( image: imageUrlss,
-          landmark: landmark.toString().isEmpty?"Not Avaliable":"${landmark.toString()}",
-          facebook: facebook.toString().isEmpty?"Not Avaliable":"${facebook.toString()}",
-          rent: rent.toString().isEmpty?"Not Avaliable":"${rent}" ,
-          kitchen: number.toString().isEmpty?"Not Avaliable":"${number.toString()}",
-          bathroom: number1.toString().isEmpty?"Not Avaliable":"${number1.toString()}",
-          bedroom: number2.toString().isEmpty?"Not Avaliable":"${number2.toString()}",
-          parking: parking==null?"Not Avaliable":"${parking.toString()}",
-          negotiable: negitoble==null?"Not Avaliable":"${negitoble.toString()}",
-          name: housename.toString().isEmpty?"Not Avaliable":"${housename.toString()}",
-          nonveg: nonveg==null?"Not Avaliable":"${nonveg.toString()}",
-          date: date.toString(),
-          status: status==null?"Not Avaliable":"${status.toString()}",
-          longitude: longitude.toString(),
-          latitude: latitude.toString(),
-          floor: floorController.text.toString().isEmpty?"Not Avaliable":"${floor.toString()}",
-          roadtype: roadtype==null?"Not Avaliable":"${roadtype.toString()}",
-          type: type==null?"Not Avaliable":"${type.toString()}",
-          furnishing: furnishing==null?"Not Avaliable":"${furnishing.toString().toLowerCase()}",
-          roadsize: roadsize.isEmpty?"Not Avaliable":"${roadsize.toString()}",
-          buildupsqrft: buildsqrtftController.text.toString().isEmpty?"Not Avaliable":"${buildsqrt.toString()}",
-          phonenumber: phonenumberController.text.toString(),
-          description: descriptionController.text.toString().isEmpty?"Not Avaliable":"${description.toString()}",
-          address: addressController.text.toString().toLowerCase().isEmpty?"Not Avaliable":"${address.toString()}",
-          // price: 10,
-          isFavourite: Status,
-          id:user!.uid,
-          view: view,
-          viewId: doc.id,
-          
-          
-          )));
-
-
-          
-                            }
-                            
-
-                            
-
-                           
-                        
 
                             //List<String?> imageUrls = await _uploadFiles();
                           },

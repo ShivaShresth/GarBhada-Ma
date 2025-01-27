@@ -13,11 +13,11 @@ class PhotoViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text("Image Viewer"),
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   title: Text("Image Viewer"),
+      //   elevation: 0,
+      // ),
       body: PhotoViewGallery.builder(
         itemCount: photos.length,
         builder: (context, index) {

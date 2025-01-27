@@ -80,6 +80,10 @@ class _SearchInputState extends State<SearchInput> {
         
         children: [
           Container(
+            decoration: BoxDecoration(  
+              border: Border.all(color: Colors.blueAccent),
+              borderRadius: BorderRadius.all(Radius.circular(10))
+            ),
             width: width*0.8,
             child: TextField(
               controller: searchController,
@@ -119,11 +123,12 @@ class _SearchInputState extends State<SearchInput> {
               ),
             ),
           ),
+          SizedBox(width: 8,),
           InkWell(
             onTap: (){  
 Navigator.push(context,MaterialPageRoute(builder: (context)=>Filter_Page()));
             },
-            child: Icon(Icons.filter_list))
+            child: Icon(Icons.filter_list,size: 50,))
         
           ]
         

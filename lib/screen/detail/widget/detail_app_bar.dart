@@ -47,14 +47,14 @@ class _DetailAppBarState extends State<DetailAppBar> {
                     onTap: () => Navigator.of(context).pop(),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.black.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(100)),
                       height: 40,
                       width: 40,
                       padding: const EdgeInsets.all(5),
                       child: const Icon(
                         Icons.arrow_back_ios,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -63,7 +63,7 @@ class _DetailAppBarState extends State<DetailAppBar> {
             ),
           ),
           Positioned(
-            bottom: height * 0.124,
+            bottom: height * 0.146,
             right: 10,
             child: InkWell(
               onTap: () {

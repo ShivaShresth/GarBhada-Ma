@@ -47,6 +47,40 @@ showMapLoaderDialog(BuildContext context){
 );
 }
 
+showAddressDialog(BuildContext context){  
+  AlertDialog alert=AlertDialog(  
+    content: Builder (builder: (context){  
+      return SizedBox(  
+        width: 100,
+        child: Column (  
+          mainAxisSize: MainAxisSize.min,
+          children: [  
+            CircularProgressIndicator(  
+              color: Color(0xffe16555),
+
+
+            ),
+            const SizedBox(  
+              height: 18,
+            ),
+            Container(  
+              margin: EdgeInsets.only(left: 7),
+              child: Text("Get Your Current Address..."),
+            )
+          ],
+        ),
+      );
+    }),
+  );
+  showDialog(   
+  barrierDismissible:false,
+  context: context,
+  builder:(BuildContext context){  
+    return alert;
+  }
+);
+}
+
 
 showLoaderDialog(BuildContext context){  
   AlertDialog alert=AlertDialog(  
