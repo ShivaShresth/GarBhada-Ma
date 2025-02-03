@@ -1,36 +1,74 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
+
 import 'package:renthouse/firebase_firestore/firebase_firestore.dart';
 import 'package:renthouse/model/category_model.dart';
 import 'package:renthouse/screen/detail/detail.dart';
-import 'package:intl/intl.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shimmer/shimmer.dart'; // Import shimmer package
-import 'package:cached_network_image/cached_network_image.dart'; // Import cached network image package
 
 class RecommendedHouse extends StatefulWidget {
-  const RecommendedHouse({Key? key}) : super(key: key);
+  final bool toprent;
+  RecommendedHouse({
+    Key? key,
+    required this.toprent,
+  }) : super(key: key);
 
   @override
   State<RecommendedHouse> createState() => _RecommendedHouseState();
 }
-
 class _RecommendedHouseState extends State<RecommendedHouse> {
   List<CategoryModel> categoriesList = [];
   bool isLoading = false;
   List<int> plusList = [];
+  ScrollController _scrollController = ScrollController();
+  int _itemsToLoad = 5; // Load 5 items initially
 
   @override
   void initState() {
     super.initState();
     getCategoryList();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      // If the user has scrolled to the end, load more items
+      _loadMoreItems();
+    }
+  }
+
+  void _loadMoreItems() {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+        // Only load more items if there are more items in the categoriesList to display
+        if (_itemsToLoad < categoriesList.length) {
+          _itemsToLoad += 5; // Increase the number of items to load
+        }
+      });
+      // Simulate a network call delay for loading more items
+      Future.delayed(Duration(seconds: 1), () {
+        setState(() {
+          isLoading = false;
+        });
+      });
+    }
   }
 
   void getCategoryList() async {
-    // If categories are already loaded, no need to load again
     if (categoriesList.isNotEmpty) {
       return;
     }
@@ -119,6 +157,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
         height: height * 0.45,
         color: Colors.white,
         child: ListView.separated(
+          controller: _scrollController,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return Shimmer.fromColors(
@@ -150,16 +189,21 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
       );
     }
 
-    // Show content after data is loaded
     return categoriesList.isEmpty
         ? Center(child: Text("No categories available"))
         : Container(
             padding: EdgeInsets.only(left: 0, top: 0, bottom: 2),
             height: height * 0.45,
             color: Colors.white,
-            child: ListView.separated(
+            child: ListView.builder(
+              controller: _scrollController,
               scrollDirection: Axis.horizontal,
+              itemCount: _itemsToLoad, // Load more items as user scrolls
               itemBuilder: (context, index) {
+                if (index >= categoriesList.length) {
+                  return Container(); // Return an empty container if index exceeds available items
+                }
+
                 CategoryModel category = categoriesList[index];
                 return CupertinoButton(
                   padding: EdgeInsets.zero,
@@ -273,10 +317,14 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                                       Text("Rs. ${category.rent}",
                                           style: TextStyle(color: Colors.white)),
                                       Text(
-                                        category.address,
+                                        category.address.isNotEmpty
+                                            ? category.address[0].toUpperCase() +
+                                                category.address.substring(1)
+                                            : "",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -295,8 +343,6 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                   ),
                 );
               },
-              separatorBuilder: (_, index) => SizedBox(width: 0),
-              itemCount: categoriesList.length,
             ),
           );
   }

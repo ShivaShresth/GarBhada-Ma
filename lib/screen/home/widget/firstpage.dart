@@ -1,5 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:renthouse/model/product_model.dart';
 import 'package:renthouse/pages/all_pages/collect_page.dart';
 import 'package:renthouse/pages/categories/best_offer.dart';
@@ -10,7 +12,11 @@ import 'package:renthouse/screen/home/widget/recent.dart';
 import 'package:renthouse/screen/home/widget/recommended_house.dart';
 
 class HomePages extends StatefulWidget {
-  const HomePages({Key? key}) : super(key: key);
+  bool toprent;
+   HomePages({
+    Key? key,
+    required this.toprent,
+  }) : super(key: key);
 
   @override
   _HomePagesState createState() => _HomePagesState();
@@ -169,7 +175,7 @@ class _HomePagesState extends State<HomePages> {
                 color: Colors.white,
                 child: Column(
                   children: [
-                    if (current == 0) Collect_Page(),
+                    if (current == 0) Collect_Page(toprent: widget.toprent,),
                     if (current == 1) Best_Offer(),
                     if (current == 2) Recent(),
                     if (current == 3) Near(),

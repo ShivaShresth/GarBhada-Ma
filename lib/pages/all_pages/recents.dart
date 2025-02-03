@@ -1,18 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:renthouse/firebase_firestore/firebase_firestore.dart';
-import 'package:renthouse/model/category_model.dart';
-import 'package:renthouse/screen/detail/detail.dart';
 import 'package:intl/intl.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart'; // Import shimmer package
 
+import 'package:renthouse/firebase_firestore/firebase_firestore.dart';
+import 'package:renthouse/model/category_model.dart';
+import 'package:renthouse/screen/detail/detail.dart';
+
 class Recents extends StatefulWidget {
-  const Recents({Key? key}) : super(key: key);
+  bool? recents;
+   Recents({
+    Key? key,
+     this.recents,
+  }) : super(key: key);
 
   @override
   State<Recents> createState() => _RecentsState();
@@ -111,7 +117,7 @@ class _RecentsState extends State<Recents> {
       color: Colors.white,
       padding: EdgeInsets.only(left: 6, top: 4),
       height: height * 0.35,
-      child: isLoading
+      child:( isLoading|| widget.recents!)
           ? _buildShimmerEffect()
           : GridView.builder(
               scrollDirection: Axis.horizontal,
@@ -343,9 +349,20 @@ class CategoryCard extends StatelessWidget {
                           ),
                           SizedBox(height: 6),
                           Text(
-                            category.address,
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
-                          ),
+  category.address.isNotEmpty
+      ? category.address[0].toUpperCase() + category.address.substring(1)
+      : "",  // In case the address is empty, it avoids showing null or empty text
+  style: TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+    color: Colors.black,
+  ),
+),
+
+                          // Text(
+                          //   category.address,
+                          //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
+                          // ),
                           SizedBox(height: 16),
                           Container(
                             padding: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),

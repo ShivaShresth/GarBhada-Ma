@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     // Simulate a network call or data fetching process
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 4));
 
     // After refreshing, you can update the state or data
     setState(() {
@@ -115,9 +115,9 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   WelcomeText(isShimmerActive: _isShimmerActive),  // Pass the shimmer state to WelcomeText
                   SearchInput(),
-                  HomePages(),
+                  HomePages(toprent: _isShimmerActive,),
                   SizedBox(height: 40),
-                  if (_isRefreshing) CircularProgressIndicator(),
+                  //if (_isRefreshing) CircularProgressIndicator(),
                 ],
               ),
             ),
