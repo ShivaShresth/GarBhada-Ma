@@ -58,24 +58,23 @@ class _MostVisitedState extends State<MostVisited> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    // if (isLoading) {
-    //   return Center(child: CircularProgressIndicator());
-    // }
-    // if (categoriesList.isEmpty) {
-    //   return Center(child: Text("No categories available"));
-    // }
+
+     // Shuffle categoriesList only when widget.recents is false
+    if (widget.mostvisited == null || widget.mostvisited == false) {
+      categoriesList.shuffle();
+    }
+
 
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.only(left: 6, bottom: 30),
-      height: height * 0.36,
-      child: (isLoading || widget.mostvisited!)
+      padding: EdgeInsets.only(left: 6, bottom: 10,top: 10),
+      height: height * 0.4,
+      child: isLoading || widget.mostvisited == true
           ? GridView.builder(
               scrollDirection: Axis.horizontal,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 1.6,
                 crossAxisCount: 1,
-                // childAspectRatio: 1.5, // Adjust aspect ratio for better spacing
               ),
               itemCount: categoriesList.length,
               itemBuilder: (context, index) {
@@ -84,8 +83,7 @@ class _MostVisitedState extends State<MostVisited> {
                   highlightColor: Colors.white, // Lighter highlight color
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                    margin:
-                        EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
+                    margin: EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -107,7 +105,6 @@ class _MostVisitedState extends State<MostVisited> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 1.6,
                 crossAxisCount: 1,
-                // childAspectRatio: 1.5, // Adjust aspect ratio for better spacing
               ),
               itemCount: categoriesList.length,
               itemBuilder: (context, index) {
@@ -128,12 +125,12 @@ class CategoryCard extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
-      margin: EdgeInsets.only(left: 2),
-      padding: EdgeInsets.all(3),
+      padding: EdgeInsets.only(left: 4,right: 6,bottom: 6,top: 6),
+      //padding: EdgeInsets.all(3),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(0),
             spreadRadius: 1,
             blurRadius: 1,
             offset: Offset(2, 2),
@@ -154,195 +151,122 @@ class CategoryCard extends StatelessWidget {
           );
         },
         child: Container(
-          width: width * 0.4,
-          height: height * 0.31,
-          margin: EdgeInsets.only(right: 2, left: 2, top: 2), // Reduced margin
+          width: width * 0.46,
+          height: height * 0.355,
           decoration: BoxDecoration(
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.black.withOpacity(0.3),
-            //     spreadRadius: 1,
-            //     blurRadius: 1,
-            //     offset: Offset(2, 2),
-            //   ),
-            // ],
+          
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.4),
+            spreadRadius: 3,
+            blurRadius: 2,
+            offset: Offset(2, 2),
+          ),
+        ],
+      
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Stack(
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 160,
-                        width: 160,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: CachedNetworkImage(
-                            imageUrl: category.image[0],
-                            height: 160,
-                            width: 160,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) =>
-
-                                // Shimmer.fromColors(
-                                //   baseColor:
-                                //       Colors.grey.shade300, // Darker base color
-                                //   highlightColor:
-                                //       Colors.white, // Lighter highlight color
-                                //   child: Container(
-                                //     padding: EdgeInsets.symmetric(
-                                //         horizontal: 2, vertical: 2),
-                                //     margin: EdgeInsets.only(
-                                //         left: 10, right: 10, top: 2, bottom: 2),
-                                //     decoration: BoxDecoration(
-                                //       boxShadow: [
-                                //         BoxShadow(
-                                //           color: Colors.black.withOpacity(0.4),
-                                //           spreadRadius: 3,
-                                //           blurRadius: 3,
-                                //           offset: Offset(2, 2),
-                                //         ),
-                                //       ],
-                                //       color: Colors.white,
-                                //       borderRadius: BorderRadius.circular(8),
-                                //     ),
-                                //   ),
-                                // ),
-                                GridView.builder(
-                              scrollDirection: Axis.horizontal,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: 1.6,
-                                crossAxisCount: 1,
-                                // childAspectRatio: 1.5, // Adjust aspect ratio for better spacing
-                              ),
-                              itemCount: 2,
-                              itemBuilder: (context, index) {
-                                return Shimmer.fromColors(
-                                  baseColor:
-                                      Colors.grey.shade300, // Darker base color
-                                  highlightColor:
-                                      Colors.white, // Lighter highlight color
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 2, vertical: 2),
-                                    margin: EdgeInsets.only(
-                                        left: 10, right: 10, top: 2, bottom: 2),
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.4),
-                                          spreadRadius: 3,
-                                          blurRadius: 3,
-                                          offset: Offset(2, 2),
-                                        ),
-                                      ],
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            errorWidget: (context, error, stackTrace) =>
-                                Center(child: Icon(Icons.error)),
+                  
+                  Container(
+                    
+                    margin: EdgeInsets.only(top: 6,left: 4,right: 3),
+                    height: height * 0.2,
+                    width: width * 0.45,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CachedNetworkImage(
+                        imageUrl: category.image[0],
+                        height: height * 0.2,
+                        width: width * 0.4,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Shimmer.fromColors(
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.white,
+                          child: Container(
+                            height: height * 0.2,
+                            width: width * 0.4,
+                            color: Colors.grey.shade300,
                           ),
                         ),
-
-                        //  ClipRRect(
-                        //   borderRadius: BorderRadius.circular(8),
-                        //   child: Image.network(
-                        //     category.image[0],
-                        //     fit: BoxFit.cover,
-                        //   ),
-                        // ),
+                        errorWidget: (context, error, stackTrace) =>
+                            Center(child: Icon(Icons.error)),
                       ),
-                      SizedBox(width: 10),
-                      Container(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            //  Text(calculateTimeDifference(category.date), style: TextStyle(fontSize: 14)),
-
-                            Padding(
-                              padding: const EdgeInsets.only(left: 2),
-                              child: Text("Rs. ${category.rent}",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black)),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 2),
-                              child: Text(
-  category.address.isNotEmpty
-      ? category.address[0].toUpperCase() + category.address.substring(1)
-      : "",  // In case the address is empty, it avoids showing null or empty text
-  style: TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 16,
-    color: Colors.black,
-  ),
-),
-
-                            ),
-
-                            SizedBox(
-                              height: 5,
-                            ),
-                            //Text("Rs ${category.price}", style: TextStyle(fontSize: 14)),
-                            Container(
-                              padding: EdgeInsets.only(
-                                  left: 6, right: 6, top: 6, bottom: 6),
-                              decoration: BoxDecoration(
-                                  color: category.isFavourite
-                                      ? Colors.green
-                                      : Colors.red,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              child: Text(
-                                "Post On :- ${calculateTimeDifference(category.date)}",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  //fontWeight: FontWeight.bold,
-                                  color: category.isFavourite
-                                      ? Colors.white
-                                      : Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Container(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: height * 0.02),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 2),
+                          child: Text(
+                            "Rs. ${category.rent}",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(height: height * 0.01),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 2),
+                          child: Text(
+                            category.address.isNotEmpty
+                                ? category.address[0].toUpperCase() +
+                                    category.address.substring(1)
+                                : "",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: height * 0.02),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 6, horizontal: 6),
+                          decoration: BoxDecoration(
+                            color: category.isFavourite
+                                ? Colors.green
+                                : Colors.red,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Text(
+                            "Post On: ${calculateTimeDifference(category.date)}",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
               Positioned(
                 top: 10,
                 right: 10,
-                child: Container(
-                  padding: EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(100)),
-                      color: Colors.grey.shade300),
-                  child: Icon(
-                    category.isFavourite ? Icons.lock_open : Icons.lock_outline,
-                    color: category.isFavourite ? Colors.green : Colors.red,
-                    size: 25,
-                  ),
-                ),
+                child:  Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.4),
+                                shape: BoxShape.circle),
+                            child: category.isFavourite
+                                ? Icon(Icons.lock_open_rounded,
+                                    size: 25, color: Colors.green)
+                                : Icon(Icons.lock_outline,
+                                    color: Colors.red, size: 25),
+                          ),
               ),
             ],
           ),
@@ -353,22 +277,13 @@ class CategoryCard extends StatelessWidget {
 
   String calculateTimeDifference(String dateString) {
     DateTime postDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateString);
-    DateTime now = DateTime.now();
-    Duration difference = now.difference(postDate);
+    Duration difference = DateTime.now().difference(postDate);
     int differenceInDays = difference.inDays;
 
-    if (difference.inSeconds < 60) {
-      return 'Just now';
-    } else if (difference.inMinutes < 60) {
-      return '${difference.inMinutes} minutes ago';
-    } else if (difference.inHours < 24) {
-      return '${difference.inHours} hours ago';
-    } else if (differenceInDays == 0) {
-      return 'Today';
-    } else if (differenceInDays == 1) {
-      return '1 day ago';
-    } else {
-      return '$differenceInDays days ago';
-    }
+    if (difference.inSeconds < 60) return 'Just now';
+    if (difference.inMinutes < 60) return '${difference.inMinutes} minutes ago';
+    if (difference.inHours < 24) return '${difference.inHours} hours ago';
+    if (differenceInDays == 1) return '1 day ago';
+    return '$differenceInDays days ago';
   }
 }

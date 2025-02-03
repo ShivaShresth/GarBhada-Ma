@@ -292,7 +292,9 @@ class _AddProductPageState extends State<AddProductPage> {
           buildupsqrft: buildsqrtftController.text.toString(),
           phonenumber: phonenumberController.text.toString(),
           description: descriptionController.text.toString(),
-          address: addressController.text,
+                    address:_currentAddress.toLowerCase().toString(),
+
+          // address: addressController.text,
           // price: 10,
           isFavourite: true,
           id: '1',
@@ -381,7 +383,10 @@ class _AddProductPageState extends State<AddProductPage> {
           "${placemark.name}, ${placemark.locality}, ${placemark.country}";
 
       setState(() {
-        _currentAddress = "${place.locality},${place.country}";
+        // _currentAddress = "${place.locality},${place.country},${placemark.name}";
+                _currentAddress = "${place.locality}";
+
+        print("${placemark.name}, ${placemark.locality}, ${placemark.country}");
         address1 = address;
       });
     } catch (e) {
@@ -616,8 +621,8 @@ class _AddProductPageState extends State<AddProductPage> {
                         Container(
                             padding:
                                 EdgeInsets.only(top: 5, left: 10, right: 10),
-                            height: MediaQuery.of(context).size.height / 0.6,
-                            width: MediaQuery.of(context).size.height,
+                            // height: MediaQuery.of(context).size.height ,
+                            // width: MediaQuery.of(context).size.height,
                             // color: Colors.white,
                             child: Column(
                               children: [
@@ -694,46 +699,46 @@ class _AddProductPageState extends State<AddProductPage> {
                                           ],
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.location_city),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(child: Text("Address")),
-                                          Container(
-                                              //margin: EdgeInsets.only(bottom: 8),
-                                              padding: EdgeInsets.only(
-                                                  top: 0, bottom: 1, left: 8),
-                                              height: 35,
-                                              width: 120,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.grey),
-                                                  borderRadius:
-                                                      BorderRadius.circular(4)),
-                                              child: Center(
-                                                child: TextFormField(
-                                                  controller: addressController,
-                                                  validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      return "Address Cannot be empty";
-                                                    } else {
-                                                      return null;
-                                                    }
-                                                  },
-                                                  decoration: InputDecoration(
-                                                      hintText: "Enter Address",
-                                                      hintStyle: TextStyle(
-                                                          fontSize: 14),
-                                                      border: InputBorder.none
-                                                      //border: OutlineInputBorder()
-                                                      ),
-                                                ),
-                                              )),
-                                        ],
-                                      ),
+                                      // Row(
+                                      //   children: [
+                                      //     Icon(Icons.location_city),
+                                      //     SizedBox(
+                                      //       width: 10,
+                                      //     ),
+                                      //     Expanded(child: Text("Address")),
+                                      //     Container(
+                                      //         //margin: EdgeInsets.only(bottom: 8),
+                                      //         padding: EdgeInsets.only(
+                                      //             top: 0, bottom: 1, left: 8),
+                                      //         height: 35,
+                                      //         width: 120,
+                                      //         decoration: BoxDecoration(
+                                      //             border: Border.all(
+                                      //                 color: Colors.grey),
+                                      //             borderRadius:
+                                      //                 BorderRadius.circular(4)),
+                                      //         child: Center(
+                                      //           child: TextFormField(
+                                      //             controller: addressController,
+                                      //             validator: (value) {
+                                      //               if (value == null ||
+                                      //                   value.isEmpty) {
+                                      //                 return "Address Cannot be empty";
+                                      //               } else {
+                                      //                 return null;
+                                      //               }
+                                      //             },
+                                      //             decoration: InputDecoration(
+                                      //                 hintText: "Enter Address",
+                                      //                 hintStyle: TextStyle(
+                                      //                     fontSize: 14),
+                                      //                 border: InputBorder.none
+                                      //                 //border: OutlineInputBorder()
+                                      //                 ),
+                                      //           ),
+                                      //         )),
+                                      //   ],
+                                      // ),
                                       SizedBox(
                                         height: 10,
                                       ),
@@ -2079,7 +2084,9 @@ class _AddProductPageState extends State<AddProductPage> {
                             List<String?> imageUrlss = await _uploadFiles();
 
                             setState(() {
-                              address = addressController.text;
+                                                  address=_currentAddress.toLowerCase().toString();
+
+                              //address = addressController.text;
                               phonenumber = phonenumberController.text;
                               rent = rentController.text;
                               floor = floorController.text;
@@ -2105,9 +2112,13 @@ class _AddProductPageState extends State<AddProductPage> {
                             print("helso${latitude}");
                             if (imageUrlss.isEmpty) {
                               showMessage("Image Cannot be Empty");
-                            } else if (address.isEmpty) {
-                              showMessage("Address Cannot be Empty");
-                            } else if (phonenumber.isEmpty) {
+                            } 
+                            
+                            // else if (address.isEmpty) {
+                            //   showMessage("Address Cannot be Empty");
+                            // }
+                            
+                             else if (phonenumber.isEmpty) {
                               showMessage("PhoneNumber Cannot be Empty");
                             } else {
                               FirebaseFirestore firestore =
@@ -2191,12 +2202,18 @@ class _AddProductPageState extends State<AddProductPage> {
                                                     .isEmpty
                                                 ? "Not Avaliable"
                                                 : "${description.toString()}",
-                                            address: addressController.text
+                                                address: _currentAddress
                                                     .toString()
                                                     .toLowerCase()
                                                     .isEmpty
                                                 ? "Not Avaliable"
                                                 : "${address.toString()}",
+                                            // address: addressController.text
+                                            //         .toString()
+                                            //         .toLowerCase()
+                                            //         .isEmpty
+                                            //     ? "Not Avaliable"
+                                            //     : "${address.toString()}",
                                             // price: 10,
                                             isFavourite: Status,
                                             id: user!.uid,

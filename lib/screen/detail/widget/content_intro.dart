@@ -60,7 +60,7 @@ class _ContentIntroState extends State<ContentIntro> {
   }
 
   directCall() async {
-  //  await FlutterPhoneDirectCaller.callNumber('1234567890');
+    //  await FlutterPhoneDirectCaller.callNumber('1234567890');
   }
 
   String calculateTimeDifference(String dateString) {
@@ -88,6 +88,8 @@ class _ContentIntroState extends State<ContentIntro> {
 
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
     DateTime postDate = DateTime.parse(widget.categoryModel!.date);
 
     String formattedDate =
@@ -106,9 +108,8 @@ class _ContentIntroState extends State<ContentIntro> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         GestureDetector(
                             onTap: () async {
@@ -117,7 +118,7 @@ class _ContentIntroState extends State<ContentIntro> {
                               print("helso${indexNumber}");
                             },
                             child: Text("House Type:-")),
-                             SizedBox(
+                        SizedBox(
                           width: 10,
                         ),
                         Text(
@@ -130,8 +131,9 @@ class _ContentIntroState extends State<ContentIntro> {
                       height: 4,
                     ),
                     Container(
+                     // color: Colors.green,
                         height: 20,
-                        width: 293,
+                        width: 263,
                         child: Row(
                           children: [
                             Text("Rent :-"),
@@ -149,8 +151,8 @@ class _ContentIntroState extends State<ContentIntro> {
                       height: 4,
                     ),
                     Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         InkWell(
                           onTap: () {
@@ -162,8 +164,9 @@ mainAxisAlignment: MainAxisAlignment.start,
                           width: 30,
                         ),
                         Container(
+                          //color: Colors.green,
                           height: 20,
-                          width: 230,
+                          width: width*0.46,
                           child: Text(
                             widget.categoryModel!.address,
                             overflow: TextOverflow.ellipsis,
@@ -181,8 +184,9 @@ mainAxisAlignment: MainAxisAlignment.start,
                           width: 30,
                         ),
                         Container(
+                          //: Colors.green,
                           height: 20,
-                          width: 238,
+                          width: 120,
                           child: Text(
                             " ${calculateTimeDifference(widget.categoryModel!.date)}",
                             style: TextStyle(

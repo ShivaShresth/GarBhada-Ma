@@ -48,7 +48,6 @@ class _AccountScreenState extends State<AccountScreen> {
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Container(
-            height: height,
             decoration: BoxDecoration(  
               color: Colors.white
             ),

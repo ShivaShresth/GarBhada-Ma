@@ -60,12 +60,12 @@ class _OpenFacebookState extends State<OpenFacebook> {
 
     // Once data is loaded, show the relevant content
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Open Facebook"),
-      // ),
-      // body: Center(
-      //   child: Text("Facebook URL is being opened...${widget.categoryModel!.facebook!}"),
-      // ),
+      appBar: AppBar(
+        title: Text("Open Facebook"),
+      ),
+      body: Center(
+        child: Text("Facebook is ...${widget.categoryModel!.facebook!}"),
+      ),
     );
   }
 }

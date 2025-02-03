@@ -48,7 +48,7 @@ class _DetailPageState extends State<DetailPage> {
                   categoryModel: widget.categoryModel,
                   plus: widget.plus ?? 0,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 0),
                 ContentIntro(categoryModel: widget.categoryModel),
                 SizedBox(height: 30),
                 List_Of_Operator(categoryModel: widget.categoryModel),

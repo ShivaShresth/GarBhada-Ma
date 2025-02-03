@@ -62,46 +62,7 @@ class _DetailAppBarState extends State<DetailAppBar> {
               ),
             ),
           ),
-          Positioned(
-            bottom: height * 0.146,
-            right: 10,
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  // Toggle the isFavourite property
-                  widget.categoryModel!.isFavourite =
-                      !widget.categoryModel!.isFavourite;
-                });
-
-                // Update the favorite list in AppProvider
-                if (widget.categoryModel!.isFavourite) {
-                  print("Adding to favorites");
-                  appProvider.addFavouriteProduct(
-                      widget.categoryModel!, widget.categoryModel!.viewId!);
-                } else {
-                  print("Removing from favorites");
-                  print("Removing from ${widget.categoryModel!.isFavourite}");
-
-                  appProvider.removeFavouriteProduct(
-                      widget.categoryModel!, widget.categoryModel!.viewId!);
-                }
-
-                print(
-                    "Current favorites: ${appProvider.getFavouriteProductList}");
-              },
-              child: Container(
-                height: 40,
-                width: 40,
-                padding: const EdgeInsets.all(5),
-                child: Icon(
-                  Icons.favorite,
-                  color: widget.categoryModel!.isFavourite
-                      ? Colors.green
-                      : Colors.red,
-                ),
-              ),
-            ),
-          ),
+         
         ],
       ),
     );

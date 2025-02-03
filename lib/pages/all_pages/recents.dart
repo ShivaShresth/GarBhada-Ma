@@ -17,7 +17,7 @@ class Recents extends StatefulWidget {
   bool? recents;
    Recents({
     Key? key,
-     this.recents,
+     this.recents=false,
   }) : super(key: key);
 
   @override
@@ -113,10 +113,15 @@ class _RecentsState extends State<Recents> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+     // Shuffle categoriesList only when widget.recents is false
+    if (widget.recents == null || widget.recents == false) {
+      categoriesList.shuffle();
+    }
+
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.only(left: 6, top: 4),
-      height: height * 0.35,
+      padding: EdgeInsets.only(left: 6, top: 0,bottom: 6),
+      height: height /2.6,
       child:( isLoading|| widget.recents!)
           ? _buildShimmerEffect()
           : GridView.builder(
@@ -152,6 +157,7 @@ class _RecentsState extends State<Recents> {
     );
   }
 }
+
 
 // A separate widget for the shimmer effect of the category card
 class CategoryCardShimmer extends StatelessWidget {
@@ -250,6 +256,7 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     double cardWidth = (screenWidth);
     return CupertinoButton(
@@ -266,7 +273,7 @@ class CategoryCard extends StatelessWidget {
       },
       child: Container(
         width: cardWidth,
-        height: 160,
+        height: height*0.2,
         margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: BoxDecoration(
           boxShadow: [
@@ -289,14 +296,14 @@ class CategoryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: 140,
-                      width: 120,
+                      height: height*0.17,
+                      width: cardWidth*0.26,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: CachedNetworkImage(
                             imageUrl: category.image[0],
-                            height: 140,
-                            width: 120,
+                            height: height*0.2,
+                            width: cardWidth*0.1,
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Shimmer.fromColors(
               baseColor: Colors.grey.shade300, // Darker base color
@@ -336,43 +343,49 @@ class CategoryCard extends StatelessWidget {
                       //   ),
                       // ),
                     ),
-                    SizedBox(width: 16),
+                    SizedBox(width: cardWidth*0.06),
                     Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 30),
+                          SizedBox(height: height*0.05),
                           Text(
                             "Rs. ${category.rent}",
-                            style: TextStyle(fontSize: 18, color: Colors.black),
+                            style: TextStyle(fontSize: cardWidth*0.04, color: Colors.black),
                           ),
-                          SizedBox(height: 6),
-                          Text(
-  category.address.isNotEmpty
-      ? category.address[0].toUpperCase() + category.address.substring(1)
-      : "",  // In case the address is empty, it avoids showing null or empty text
-  style: TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 18,
-    color: Colors.black,
-  ),
-),
+                          SizedBox(height: height*0.002),
+                          Container(
+                            width: 190,
+                            child: Text(
+                              category.address.isNotEmpty
+                                  ? category.address[0].toUpperCase() + category.address.substring(1)
+                                  : "",  // In case the address is empty, it avoids showing null or empty text
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Colors.black,
+                                overflow:TextOverflow.ellipsis
+                              ),
+                            ),
+                          ),
 
                           // Text(
                           //   category.address,
                           //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
                           // ),
-                          SizedBox(height: 16),
+                          SizedBox(height: height*0.01),
                           Container(
-                            padding: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
+                            padding: EdgeInsets.only(left: cardWidth*0.02, right: cardWidth*0.02, top: height*0.006, bottom: height*0.006),
                             decoration: BoxDecoration(
                               color: category.isFavourite ? Colors.green : Colors.red,
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius: BorderRadius.all(Radius.circular(8)),
                             ),
+                            
+                            
                             child: Text(
                               "Post On :- ${calculateTimeDifference(category.date)}",
-                              style: TextStyle(fontSize: 14, color: Colors.white),
+                              style: TextStyle(fontSize: cardWidth*0.03, color: Colors.white),
                             ),
                           ),
                         ],
@@ -386,7 +399,7 @@ class CategoryCard extends StatelessWidget {
               top: 10,
               right: 10,
               child: Container(
-                padding: EdgeInsets.all(6),
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade300,
                   borderRadius: BorderRadius.all(Radius.circular(100)),

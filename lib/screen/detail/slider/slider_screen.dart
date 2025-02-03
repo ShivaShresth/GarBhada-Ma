@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 import 'package:renthouse/model/category_model.dart';
 import 'package:renthouse/pages/all_pages/photo_view_page.dart';
+import 'package:renthouse/provider/app_provider.dart';
 import 'package:renthouse/service/shared_pref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -84,6 +86,8 @@ class _SliderScreenState extends State<SliderScreen> {
 
   @override
   Widget build(BuildContext context) {
+      final appProvider = Provider.of<AppProvider>(context);
+
     double height=MediaQuery.of(context).size.height;
     return Scaffold(
       body: Column(
@@ -140,8 +144,57 @@ class _SliderScreenState extends State<SliderScreen> {
                     initialPage: num?.toInt() ?? 0,
                   ),
                 ),
+                 Positioned(
+            bottom: 6,
+            right: 6,
+            child: SafeArea(
+              child: Container(
+                padding: EdgeInsets.all(6),
+                decoration: BoxDecoration( 
+                  borderRadius: BorderRadius.all(Radius.circular(100)), 
+                  color: Colors.black.withOpacity(0.3)
+                ),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      // Toggle the isFavourite property
+                      widget.categoryModel!.isFavourite =
+                          !widget.categoryModel!.isFavourite;
+                    });
+                            
+                    // Update the favorite list in AppProvider
+                    if (widget.categoryModel!.isFavourite) {
+                      print("Adding to favorites");
+                      appProvider.addFavouriteProduct(
+                          widget.categoryModel!, widget.categoryModel!.viewId!);
+                    } else {
+                      print("Removing from favorites");
+                      print("Removing from ${widget.categoryModel!.isFavourite}");
+                            
+                      appProvider.removeFavouriteProduct(
+                          widget.categoryModel!, widget.categoryModel!.viewId!);
+                    }
+                            
+                    print(
+                        "Current favorites: ${appProvider.getFavouriteProductList}");
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    padding: const EdgeInsets.all(5),
+                    child: Icon(
+                      Icons.favorite,
+                      color: widget.categoryModel!.isFavourite
+                          ? Colors.green
+                          : Colors.red,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
                 Positioned(
-                  bottom: 20,
+                  bottom: 23,
                   left: 0,
                   right: 0,
                   child: Row(
@@ -164,6 +217,7 @@ class _SliderScreenState extends State<SliderScreen> {
                         : [],
                   ),
                 ),
+                
               ],
             )
           else

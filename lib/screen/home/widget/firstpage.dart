@@ -80,13 +80,13 @@ class _HomePagesState extends State<HomePages> {
   double getContainerHeight() {
     switch (current) {
       case 0: // Collect Page
-        return MediaQuery.of(context).size.height / 0.63;
+        return MediaQuery.of(context).size.height *1.7;
       case 1: // Best Offer Page
-        return MediaQuery.of(context).size.height / 1.5; // Example height
+        return MediaQuery.of(context).size.height / 1.4; // Example height
       case 2: // Recent Page
         return MediaQuery.of(context).size.height / 1.4; // Example height
       case 3: // Near Page
-        return MediaQuery.of(context).size.height / 1.3; // Example height
+        return MediaQuery.of(context).size.height / 1.4; // Example height
       default:
         return MediaQuery.of(context).size.height / 1.6; // Default height
     }

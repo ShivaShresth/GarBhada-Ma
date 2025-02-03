@@ -96,14 +96,20 @@ class _List_Of_OperatorState extends State<List_Of_Operator> {
                             children: [
                               InkWell(
                                 onTap: (){  
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>OpenFacebook(categoryModel: widget.categoryModel,)));
+
+                                   
+                                                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OpenFacebook(categoryModel: widget.categoryModel,)));
+
+                                  
+                                                                                                        print("Null${widget.categoryModel}");
+
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 10),
                                   child: CircleAvatar(
                                     
                                     radius: 20,
-                                    backgroundImage:NetworkImage("https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg"),
+                                    backgroundImage:widget.categoryModel!.facebook!.isEmpty ?NetworkImage("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png"):   NetworkImage("https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg"),
                                   ),
                                 ),
                               ),

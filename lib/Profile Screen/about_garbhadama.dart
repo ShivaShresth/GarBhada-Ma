@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:renthouse/Profile%20Screen/term_conditions.dart';
 
 class About_GarBhadama extends StatefulWidget {
   const About_GarBhadama({super.key});
@@ -105,9 +106,19 @@ class _About_GarBhadamaState extends State<About_GarBhadama> {
                 child: Row(
                   children: [
                     Text("See more for "),
-                    Text(
-                      "Terms and Conditions",
-                      style: TextStyle(color: Colors.green),
+                    InkWell(
+                    
+                         onTap: (){  
+                    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Term_Conditions()));
+                        
+                      },
+                      child: Text(
+                        "Terms and Conditions",
+                        style: TextStyle(color: Colors.green),
+                      ),
                     ),
                   ],
                 ),

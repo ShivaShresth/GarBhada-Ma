@@ -13,10 +13,10 @@ import 'package:renthouse/model/category_model.dart';
 import 'package:renthouse/screen/detail/detail.dart';
 
 class RecommendedHouse extends StatefulWidget {
-  final bool toprent;
+  final bool? toprent;
   RecommendedHouse({
     Key? key,
-    required this.toprent,
+     this.toprent,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
   void _scrollListener() {
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
       // If the user has scrolled to the end, load more items
-      _loadMoreItems();
+      //_loadMoreItems();
     }
   }
 
@@ -78,6 +78,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
     });
 
     categoriesList = await FirebaseFirestoreHelper.instance.getCat();
+
     plusList = List.generate(categoriesList.length, (_) => 0);
 
     setState(() {
@@ -189,6 +190,48 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
       );
     }
 
+    if(widget.toprent!){  
+     return Container(
+        padding: EdgeInsets.only(left: 0, top: 0, bottom: 2),
+        height: height * 0.45,
+        color: Colors.white,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return Shimmer.fromColors(
+              baseColor: Colors.grey.shade300, // Darker base color
+              highlightColor: Colors.white,    // Lighter highlight color
+              child: Container(
+                height: height * 0.6,
+                width: width * 0.56,
+                padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                margin: EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.4),
+                      spreadRadius: 3,
+                      blurRadius: 3,
+                      offset: Offset(2, 2),
+                    ),
+                  ],
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (_, index) => SizedBox(width: 0),
+          itemCount: 5, // Display 5 shimmer placeholders
+        ),
+      ); 
+    };
+    // Shuffle categoriesList only when widget.toprent is false
+    if (widget.toprent == null || widget.toprent == false) {
+      categoriesList.shuffle();
+    }
+
+
     return categoriesList.isEmpty
         ? Center(child: Text("No categories available"))
         : Container(
@@ -250,13 +293,16 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                     ),
                     child: Stack(
                       children: [
-                        CachedNetworkImage(
-                          imageUrl: category.image[0],
-                          height: 390,
-                          width: 230,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                          errorWidget: (context, error, stackTrace) => Center(child: Icon(Icons.error)),
+                        ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          child: CachedNetworkImage(
+                            imageUrl: category.image[0],
+                            height: 390,
+                            width: 230,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, error, stackTrace) => Center(child: Icon(Icons.error)),
+                          ),
                         ),
                         Positioned(
                           right: 8,

@@ -110,6 +110,8 @@ class _WelcomeTextState extends State<WelcomeText>
 
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
     return AnimatedBuilder(
       animation: _controller,
       builder: (BuildContext context, Widget? child) {
@@ -137,13 +139,13 @@ class _WelcomeTextState extends State<WelcomeText>
                                   highlightColor: Colors.yellow,
                                   child: Text(" Ghar-",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,
                                           fontSize: 40)),
                                 ),
                               ),
                             )
                           : Text(" Ghar-",
-                              style: TextStyle(
+                              style: TextStyle(fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.bold, fontSize: 40)),
                       widget.isShimmerActive
                           ? Transform.translate(
@@ -157,17 +159,20 @@ class _WelcomeTextState extends State<WelcomeText>
                                   highlightColor: Colors.green,
                                   child: Text("BhadaMa",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,
                                           fontSize: 40)),
                                 ),
                             ),
                           )
                           : Text("BhadaMa",
-                              style: TextStyle(
+                              style: TextStyle(fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.bold, fontSize: 40)),
                       SizedBox(
-                        width: 60,
+                        width: width*0.129,
                       ),
+
+
+                      
                       CircleAvatar(
                         backgroundImage: AssetImage('assets/b.png'),
                       ),

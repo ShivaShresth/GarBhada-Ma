@@ -79,7 +79,7 @@ Future<void> _initialize() async {
     });
 
     try {
-      categoriesList = await FirebaseFirestoreHelper.instance.getCatss(_currentAddress);
+      categoriesList = await FirebaseFirestoreHelper.instance.getCatss(_currentAddress.toLowerCase());
     } catch (e) {
       print("Error fetching categories: $e");
     }
@@ -103,19 +103,20 @@ Future<void> _initialize() async {
 
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
     double containerHeight = MediaQuery.of(context).size.height * 0.2; // 20% of screen height
     if (isLoading) {
       return Center(child: CircularProgressIndicator());
     }
     if (categoriesList.isEmpty) {
-      return Center(child: Text("${_currentAddress} No categories available "));
+      return Center(child: Text("${_currentAddress.toLowerCase()} No categories available "));
     }
 
     return Container(
-      color: Colors.white,
 
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-     height: 506,
+     height: height*0.60,
       
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
@@ -142,6 +143,8 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
     double screenWidth=MediaQuery.of(context).size.width;
     double cardWidth=(screenWidth);
     return CupertinoButton(
@@ -182,7 +185,7 @@ class CategoryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: 133,
+                      height: height*0.178,
                       width: 120,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
@@ -199,9 +202,12 @@ class CategoryCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(height: 30,),
-                        //  Text(calculateTimeDifference(category.date), style: TextStyle(fontSize: 14)),
                           Text(category.name, style: TextStyle(fontSize: 14)),
-                          Text(category.address, style: TextStyle(fontSize: 14)),
+                          //Text(category.address, style: TextStyle(fontSize: 14)),
+                          Text(toTitleCase(category.address), style: TextStyle(fontSize: 14)),
+                                                   Text(calculateTimeDifference(category.date), style: TextStyle(fontSize: 14)),
+
+
                           //Text("Rs ${category.price}", style: TextStyle(fontSize: 14)),
                         ],
                       ),
@@ -224,4 +230,25 @@ class CategoryCard extends StatelessWidget {
       ),
     );
   }
+  String toTitleCase(String text) {
+  if (text == null) return '';
+  return text.split(' ').map((word) {
+    return word.length > 1 
+        ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+        : word.toUpperCase();  // Capitalize single letter words too, like 'M'
+  }).join(' ');
+}
+
+ String calculateTimeDifference(String dateString) {
+    DateTime postDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateString);
+    Duration difference = DateTime.now().difference(postDate);
+    int differenceInDays = difference.inDays;
+
+    if (difference.inSeconds < 60) return 'Just now';
+    if (difference.inMinutes < 60) return '${difference.inMinutes} minutes ago';
+    if (difference.inHours < 24) return '${difference.inHours} hours ago';
+    if (differenceInDays == 1) return '1 day ago';
+    return '$differenceInDays days ago';
+  }
+
 }

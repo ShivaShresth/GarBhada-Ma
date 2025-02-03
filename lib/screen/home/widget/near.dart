@@ -81,7 +81,7 @@ Future<void> _initialize() async {
       isLoading = true;
     });
 
-    categoriesList = await FirebaseFirestoreHelper.instance.getNear(widget.address!=null?widget.address!:_currentAddress);
+    categoriesList = await FirebaseFirestoreHelper.instance.getNear(widget.address!=null?widget.address!:_currentAddress.toLowerCase());
 
     setState(() {
       isLoading = false;
@@ -133,23 +133,25 @@ Future<void> _initialize() async {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return Center(child: CircularProgressIndicator());
-    }
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
+    // if (isLoading) {
+    //   return Center(child: CircularProgressIndicator());
+    // }
     if (categoriesList.isEmpty) {
       return Center(child: Text("No categories available${_currentAddress}"));
     }
 
-    return Container(
+return Container(
       color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      height: 306,
+      height: height*0.60,
       
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
       childAspectRatio: 0.46,
-          crossAxisCount: 2,
+          crossAxisCount: 3,
          // childAspectRatio: 1.5, // Adjust aspect ratio for better spacing
         ),
         itemCount: categoriesList.length,
@@ -158,6 +160,24 @@ Future<void> _initialize() async {
         },
       ),
     );
+    // return Container(
+    //   color: Colors.white,
+    //   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+    //   height: 306,
+      
+    //   child: GridView.builder(
+    //     scrollDirection: Axis.horizontal,
+    //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    //   childAspectRatio: 0.46,
+    //       crossAxisCount: 2,
+    //      // childAspectRatio: 1.5, // Adjust aspect ratio for better spacing
+    //     ),
+    //     itemCount: categoriesList.length,
+    //     itemBuilder: (context, index) {
+    //       return CategoryCard(category: categoriesList[index]);
+    //     },
+    //   ),
+    // );
   }
 }
 
@@ -170,6 +190,8 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
     double screenWidth=MediaQuery.of(context).size.width;
     double cardWidth=(screenWidth);
     return CupertinoButton(
@@ -185,7 +207,7 @@ class CategoryCard extends StatelessWidget {
         );
       },
       child: Container(
-        width: cardWidth,
+       width: cardWidth,
         height: 160,
         margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5), // Reduced margin
         decoration: BoxDecoration(
@@ -210,7 +232,7 @@ class CategoryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: 133,
+                      height: height*0.178,
                       width: 120,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),

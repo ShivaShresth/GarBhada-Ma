@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     // Set a timer to stop shimmer effect after 3 seconds
-    Timer(Duration(seconds: 6), () {
+    Timer(Duration(seconds: 1), () {
       setState(() {
         _isShimmerActive = false;
       });
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     // Simulate a network call or data fetching process
-    await Future.delayed(Duration(seconds: 4));
+    await Future.delayed(Duration(seconds: 1));
 
     // After refreshing, you can update the state or data
     setState(() {
@@ -116,7 +116,6 @@ class _HomePageState extends State<HomePage> {
                   WelcomeText(isShimmerActive: _isShimmerActive),  // Pass the shimmer state to WelcomeText
                   SearchInput(),
                   HomePages(toprent: _isShimmerActive,),
-                  SizedBox(height: 40),
                   //if (_isRefreshing) CircularProgressIndicator(),
                 ],
               ),

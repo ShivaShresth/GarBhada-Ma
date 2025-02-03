@@ -116,9 +116,8 @@ class _Edit_PageState extends State<Edit_Page> {
                       CategoryModel category = products[index];
                       return CupertinoButton(
                         onPressed: () {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>Update_Profile(categoryModel: category,index: index,)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Update_Profile(categoryModel: category, index: index)));
                           print("Hellos");
-                          // Add your action here
                         },
                         padding: EdgeInsets.zero,
                         child: Stack(
@@ -143,6 +142,23 @@ class _Edit_PageState extends State<Edit_Page> {
                                     child: Image.network(
                                       category.image[0], // Using the first image only
                                       fit: BoxFit.cover,
+                                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          // Image loaded, show the image
+                                          return child;
+                                        } else {
+                                          // Image is still loading, show progress indicator
+                                          return Center(
+                                            child: CircularProgressIndicator(),
+                                            // child: CircularProgressIndicator(
+                                            //   value: loadingProgress.expectedTotalBytes != null
+                                            //       ? loadingProgress.cumulativeBytesLoaded /
+                                            //           (loadingProgress.expectedTotalBytes ?? 1)
+                                            //       : null,
+                                            // ),
+                                          );
+                                        }
+                                      },
                                     ),
                                   ),
                                   Padding(
@@ -152,13 +168,11 @@ class _Edit_PageState extends State<Edit_Page> {
                                       children: [
                                         Text(
                                           category.name,
-                                        
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         SizedBox(height: 4),
                                         Text(
                                           category.address,
-                                          
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ],
@@ -185,5 +199,9 @@ class _Edit_PageState extends State<Edit_Page> {
                   ),
                 ),
     );
+  }
+
+  void showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 }
