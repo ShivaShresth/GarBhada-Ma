@@ -110,13 +110,13 @@ class _WelcomeTextState extends State<WelcomeText>
 
   @override
   Widget build(BuildContext context) {
-    double height=MediaQuery.of(context).size.height;
-    double width=MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return AnimatedBuilder(
       animation: _controller,
       builder: (BuildContext context, Widget? child) {
         return Container(
-          padding: EdgeInsets.only(left: 6, right: 20, bottom: 10, top: 15),
+          padding: EdgeInsets.only(left: 6, right: 0, bottom: 10, top: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -126,57 +126,206 @@ class _WelcomeTextState extends State<WelcomeText>
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      widget.isShimmerActive
-                          ? Transform.translate(
-                              offset: Offset(0, (1 - _animation1.value) * 50),
-                              child: Opacity(
-                                opacity: _animation1.value,
-                                child: Shimmer.fromColors(
-                                  baseColor: Colors.black87,
-                                  highlightColor: Colors.yellow,
-                                  child: Text(" Ghar-",
+                  Container(
+                    /// color: Colors.green,
+
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        widget.isShimmerActive
+                            ? Transform.translate(
+                                offset: Offset(0, (1 - _animation1.value) * 50),
+                                child: Opacity(
+                                  opacity: _animation1.value,
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.green,
+                                    highlightColor: Colors.yellow,
+                                    child: Row(
+                                children: [
+                                  Text("G",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,
+                                          color: Colors.blue.shade900,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
                                           fontSize: 40)),
-                                ),
+                                  Text("h",
+                                      style: TextStyle(
+                                          color: Colors.green.shade900,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40)),
+                                  Text("a",
+                                      style: TextStyle(
+                                          color: Colors.red.shade900,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40)),
+                                  Text("r",
+                                      style: TextStyle(
+                                          color: Colors.yellow.shade900,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40)),
+                                  Text("-",
+                                      style: TextStyle(
+                                          color: Colors.blue.shade900,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40)),
+                                ],
                               ),
-                            )
-                          : Text(" Ghar-",
-                              style: TextStyle(fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.bold, fontSize: 40)),
-                      widget.isShimmerActive
-                          ? Transform.translate(
-                                                          offset: Offset(0, (1 - _animation1.value) * 50),
-
-                            child: Opacity(
-                                                              opacity: _animation1.value,
-
-                              child: Shimmer.fromColors(
-                                  baseColor: Colors.black87,
-                                  highlightColor: Colors.green,
-                                  child: Text("BhadaMa",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,
-                                          fontSize: 40)),
+                                  ),
                                 ),
+                              )
+                            : Row(
+                                children: [
+                                  Text(" G",
+                                      style: TextStyle(
+                                          color: Colors.blue.shade600,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40)),
+                                  Text("h",
+                                      style: TextStyle(
+                                          color: Colors.green.shade900,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40)),
+                                  Text("a",
+                                      style: TextStyle(
+                                          color: Colors.red.shade900,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40)),
+                                  Text("r",
+                                      style: TextStyle(
+                                          color: Colors.yellow.shade900,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40)),
+                                  Text("-",
+                                      style: TextStyle(
+                                          color: Colors.blue.shade900,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40)),
+                                ],
+                              ),
+                        widget.isShimmerActive
+                            ? Transform.translate(
+                                offset: Offset(0, (1 - _animation1.value) * 50),
+                                child: Opacity(
+                                  opacity: _animation1.value,
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.green,
+                                    highlightColor: Colors.yellow,
+                                    child: Row(
+                              children: [
+                                Text("B",
+                                    style: TextStyle(
+                                        color: Colors.pink.shade900,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 40)),
+                                        Text("h",
+                            style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                        Text("a",
+                            style: TextStyle(
+                                color: Colors.red.shade900,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                        Text("d",
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                        Text("a",
+                            style: TextStyle(
+                                color: Colors.orange.shade900,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                        Text("M",
+                            style: TextStyle(
+                                color: Colors.purple.shade900,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                        Text("a",
+                            style: TextStyle(
+                                color: Colors.lightBlue.shade900,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                              ],
                             ),
-                          )
-                          : Text("BhadaMa",
-                              style: TextStyle(fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.bold, fontSize: 40)),
-                      SizedBox(
-                        width: width*0.129,
-                      ),
-
-
-                      
-                      CircleAvatar(
-                        backgroundImage: AssetImage('assets/b.png'),
-                      ),
-                    ],
+                                  ),
+                                ),
+                              )
+                            : Row(
+                              children: [
+                                Text("B",
+                                    style: TextStyle(
+                                        color: Colors.pink.shade900,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 40)),
+                                        Text("h",
+                            style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                        Text("a",
+                            style: TextStyle(
+                                color: Colors.red.shade900,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                        Text("d",
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                        Text("a",
+                            style: TextStyle(
+                                color: Colors.orange.shade900,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                        Text("M",
+                            style: TextStyle(
+                                color: Colors.purple.shade900,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                        Text("a",
+                            style: TextStyle(
+                                color: Colors.lightBlue.shade900,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40)),
+                              ],
+                            ),
+                        
+                        SizedBox(
+                          width: width * 0.180,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage('assets/b.png'),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

@@ -76,7 +76,7 @@ class _AboutState extends State<About> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
     }
-    return await Geolocator.getCurrentPosition();
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
   _getAddressFromCoordinates() async {
@@ -257,11 +257,11 @@ SizedBox(height: 20,),
     // Replace these coordinates with the desired location
     // double latitude = 37.7749;
     // double longitude = -122.4194;
-    double latitude = 27.69786;
-    double longitude = 85.34729;
+    // double latitude = 27.69786;
+    // double longitude = 85.34729;
 
-    //  double latitude = double.parse(widget.categoryModel!.latitude);
-    // double longitude = double.parse(widget.categoryModel!.longitude);
+     double latitude = double.parse(widget.categoryModel!.latitude);
+    double longitude = double.parse(widget.categoryModel!.longitude);
     print(widget.categoryModel!.latitude);
     print(longitude);
 
@@ -273,4 +273,22 @@ SizedBox(height: 20,),
       throw 'Could not launch $mapUrl';
     }
   }
+
+  // Future<void> _launchMap() async {
+  // double latitude = double.parse(widget.categoryModel!.latitude);
+  // double longitude = double.parse(widget.categoryModel!.longitude);
+
+  // print("Latitude: $latitude");
+  // print("Longitude: $longitude");
+
+  // String mapUrl = 'google.navigation:q=$latitude,$longitude';
+
+  // final Uri uri = Uri.parse(mapUrl);
+  // if (await canLaunchUrl(uri)) {
+  //   await launchUrl(uri);
+  // } else {
+  //   throw 'Could not launch map URL: $mapUrl';
+  // }
+//}
+
 }

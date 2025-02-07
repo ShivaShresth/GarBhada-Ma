@@ -76,12 +76,14 @@ class _SearchInputState extends State<SearchInput> {
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return Container(
-      padding: EdgeInsets.only(left: 10, right: 10, bottom: 2),
+
+      padding: EdgeInsets.only(left: 10, right: 0, bottom: 2),
       child: Row(
         
         children: [
           Container(
             decoration: BoxDecoration(  
+
               border: Border.all(color: Colors.blueAccent),
               borderRadius: BorderRadius.all(Radius.circular(10))
             ),
@@ -124,7 +126,7 @@ class _SearchInputState extends State<SearchInput> {
               ),
             ),
           ),
-          SizedBox(width: width*0.001,),
+          SizedBox(width: width*0.033,),
           InkWell(
             onTap: (){  
 Navigator.push(context,MaterialPageRoute(builder: (context)=>Filter_Page()));

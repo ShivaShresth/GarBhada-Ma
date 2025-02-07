@@ -12,21 +12,31 @@ class _About_GarBhadamaState extends State<About_GarBhadama> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        elevation:1,
+        title:Text(
+                    "About Us",
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  ) ,
+         leading: InkWell(
+          onTap: (){  
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back_ios)),
+              backgroundColor: Colors.white,
+
+      ),
       body: Container(
         padding: EdgeInsets.only(left: 20,right: 20),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "About Us",
-                    style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  )),
+            
               SizedBox(
                 height: 10,
               ),

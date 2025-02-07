@@ -18,6 +18,35 @@ class FirebaseFirestoreHelper {
   late CollectionReference productCollection1 =
       _firebaseFirestore.collection('product');
 
+      Future<List<CategoryModel>> takePhotget() async {
+  try {
+    DocumentSnapshot<Map<String, dynamic>> querySnapshot =
+        await _firebaseFirestore.collection("cats")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection("gamer")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .get();
+
+    // Check if the document exists
+    if (!querySnapshot.exists) {
+      print("Document does not exist");
+      return [];
+    }
+
+    // Convert the document data to a list of CategoryModel
+    // Assuming you're expecting multiple categories but currently fetching one document.
+    Map<String, dynamic>? data = querySnapshot.data();
+    if (data != null) {
+      return [CategoryModel.fromJson(data)];
+    } else {
+      return [];
+    }
+  } catch (e) {
+    showMessage(e.toString());
+    return [];
+  }
+}
+
   Future<List<CategoryModel>> getCategories() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =

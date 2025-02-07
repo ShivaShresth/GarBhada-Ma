@@ -175,7 +175,7 @@ Future<void> _initialize() async {
             ),
             itemCount: categoriesList.length,
             itemBuilder: (context, index) {
-              return CategoryCard(category: categoriesList[index]);
+              return CategoryCard(category: categoriesList[index],index: index,onUpdateViewCount: updateViewCount);
             },
           ),
         ),
@@ -189,11 +189,18 @@ Future<void> _initialize() async {
 
 
 
-class CategoryCard extends StatelessWidget {
+class CategoryCard extends StatefulWidget {
   final CategoryModel category;
+    final int index;
+  final Function? onUpdateViewCount;
 
-  const CategoryCard({Key? key, required this.category}) : super(key: key);
+   CategoryCard({Key? key, required this.category, required this.index, this.onUpdateViewCount}) : super(key: key);
 
+  @override
+  State<CategoryCard> createState() => _CategoryCardState();
+}
+
+class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
      double height=MediaQuery.of(context).size.height;
@@ -202,11 +209,20 @@ class CategoryCard extends StatelessWidget {
     double cardWidth=(screenWidth);
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: () {
+      onPressed: ()async{
+           // Increment view count
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        int currentViewCount = prefs.getInt("num_${widget.category.id}") ?? 0;
+        prefs.setInt("num_${widget.category.id}", currentViewCount + 1);
+
+        // Update the view count in Firestore
+        if (widget.onUpdateViewCount != null) {
+          await widget.onUpdateViewCount!( widget.category.viewId);
+        }
         Navigator.push(
           context,
           PageTransition(
-            child: DetailPage(categoryModel: category),
+            child: DetailPage(categoryModel: widget.category),
             type: PageTransitionType.fade,
             duration: Duration(milliseconds: 400),
           ),
@@ -243,7 +259,7 @@ class CategoryCard extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.network(
-                          category.image[0],
+                          widget.category.image[0],
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -256,8 +272,8 @@ class CategoryCard extends StatelessWidget {
                         children: [
                           SizedBox(height: 30,),
                         //  Text(calculateTimeDifference(category.date), style: TextStyle(fontSize: 14)),
-                          Text(category.name, style: TextStyle(fontSize: 14)),
-                          Text(category.address, style: TextStyle(fontSize: 14)),
+                          Text(widget.category.name, style: TextStyle(fontSize: 14)),
+                          Text(widget.category.address, style: TextStyle(fontSize: 14)),
                           //Text("Rs ${category.price}", style: TextStyle(fontSize: 14)),
                         ],
                       ),
@@ -270,8 +286,8 @@ class CategoryCard extends StatelessWidget {
               top: 10,
               right: 10,
               child: Icon(
-                category.isFavourite ? Icons.lock_open : Icons.lock_outline,
-                color: category.isFavourite ? Colors.green : Colors.red,
+                widget.category.isFavourite ? Icons.lock_open : Icons.lock_outline,
+                color: widget.category.isFavourite ? Colors.green : Colors.red,
                 size: 25,
               ),
             ),

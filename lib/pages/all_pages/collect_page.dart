@@ -21,6 +21,7 @@ class Collect_Page extends StatefulWidget {
 }
 
 class _Collect_PageState extends State<Collect_Page> {
+    final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,21 +29,22 @@ class _Collect_PageState extends State<Collect_Page> {
 
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        physics: NeverScrollableScrollPhysics(),
+        controller: _scrollController,
+       // physics: NeverScrollableScrollPhysics(),
         child: Column(
           children: [
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 10,top: 14),
-                  child: Text("Top Room Rent",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14), ),
+                  padding: const EdgeInsets.only(left: 10,top: 16,bottom: 10),
+                  child: Text("Top Room Rent",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18), ),
                 )),
             RecommendedHouse(toprent:widget.toprent ,),
             Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 14,top: 14),
-                  child: Text("Recent",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                  padding: const EdgeInsets.only(left: 14,top: 14,bottom: 10),
+                  child: Text("Recent",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                 )),
                 Recents(recents: widget.toprent,),
           //  Best_Offer(),
@@ -51,8 +53,8 @@ class _Collect_PageState extends State<Collect_Page> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 10,top: 0,bottom: 6),
-                  child: Text("Most Visited",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                  padding: const EdgeInsets.only(left: 14,top: 0,bottom: 0),
+                  child: Text("Most Visited",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                 )),
 
             MostVisited(mostvisited: widget.toprent,)

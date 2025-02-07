@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -131,6 +133,45 @@ Future<void> _initialize() async {
   //   }
   // }
 
+    Future<void> updateViewCount(String? viewId) async {
+    if (viewId == null) {
+      print("viewId is null");
+      return;
+    }
+
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        print("User is not authenticated");
+        return;
+      }
+
+      DocumentReference doc = FirebaseFirestore.instance
+          .collection("cat")
+          .doc(user.uid)
+          .collection("cats")
+          .doc(viewId);
+
+      // Fetch current view count
+      DocumentSnapshot snapshot = await doc.get();
+
+      // Cast the data to Map<String, dynamic>
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+
+      // Get the current view count or default to 0
+      int currentViewCount = data?['view'] ?? 0;
+
+      // Update the view count
+      await doc.set({"view": currentViewCount + 1}, SetOptions(merge: true));
+      print("Updated view count for $viewId to ${currentViewCount + 1}");
+    } catch (e) {
+      print("Error updating view count: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to update view count")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double height=MediaQuery.of(context).size.height;
@@ -156,7 +197,7 @@ return Container(
         ),
         itemCount: categoriesList.length,
         itemBuilder: (context, index) {
-          return CategoryCard(category: categoriesList[index]);
+          return CategoryCard(category: categoriesList[index],index: index,onUpdateViewCount: updateViewCount,);
         },
       ),
     );
@@ -183,11 +224,21 @@ return Container(
 
 
 
-class CategoryCard extends StatelessWidget {
+class CategoryCard extends StatefulWidget {
   final CategoryModel category;
+  final int index;
 
-  const CategoryCard({Key? key, required this.category}) : super(key: key);
+  final Function? onUpdateViewCount;
 
+
+  const CategoryCard({Key? key, required this.category, required this.index, this.onUpdateViewCount}) : super(key: key);
+
+  @override
+  State<CategoryCard> createState() => _CategoryCardState();
+}
+
+class _CategoryCardState extends State<CategoryCard> {
+    
   @override
   Widget build(BuildContext context) {
      double height=MediaQuery.of(context).size.height;
@@ -200,7 +251,7 @@ class CategoryCard extends StatelessWidget {
         Navigator.push(
           context,
           PageTransition(
-            child: DetailPage(categoryModel: category),
+            child: DetailPage(categoryModel: widget.category),
             type: PageTransitionType.fade,
             duration: Duration(milliseconds: 400),
           ),
@@ -237,7 +288,7 @@ class CategoryCard extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.network(
-                          category.image[0],
+                          widget.category.image[0],
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -250,8 +301,8 @@ class CategoryCard extends StatelessWidget {
                         children: [
                           SizedBox(height: 30,),
                         //  Text(calculateTimeDifference(category.date), style: TextStyle(fontSize: 14)),
-                          Text(category.name, style: TextStyle(fontSize: 14)),
-                          Text(category.address, style: TextStyle(fontSize: 14)),
+                          Text(widget.category.name, style: TextStyle(fontSize: 14)),
+                          Text(widget.category.address, style: TextStyle(fontSize: 14)),
                           //Text("Rs ${category.price}", style: TextStyle(fontSize: 14)),
                         ],
                       ),
@@ -264,8 +315,8 @@ class CategoryCard extends StatelessWidget {
               top: 10,
               right: 10,
               child: Icon(
-                category.isFavourite ? Icons.lock_open : Icons.lock_outline,
-                color: category.isFavourite ? Colors.green : Colors.red,
+                widget.category.isFavourite ? Icons.lock_open : Icons.lock_outline,
+                color: widget.category.isFavourite ? Colors.green : Colors.red,
                 size: 25,
               ),
             ),

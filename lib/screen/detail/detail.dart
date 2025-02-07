@@ -37,147 +37,154 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DetailAppBar(
-                  categoryModel: widget.categoryModel,
-                  plus: widget.plus ?? 0,
-                ),
-                SizedBox(height: 0),
-                ContentIntro(categoryModel: widget.categoryModel),
-                SizedBox(height: 30),
-                List_Of_Operator(categoryModel: widget.categoryModel),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    height: 2,
-                    width: MediaQuery.of(context).size.width / 1.06,
-                    color: Colors.grey,
-                  ),
-                ),
-                About(categoryModel: widget.categoryModel),
-                SizedBox(height: 20),
-               // Text("${widget.categoryModel!.address.length}"),
-               Padding(
-                 padding: const EdgeInsets.only(left: 16,bottom: 10),
-                 child: Text(
-                            "Releted",
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors
-                                    .green, // Optional: Set the underline color
-                                decorationThickness: 3,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-               ),
-                _buildRecentOrNear(),
-                SizedBox(height: 100),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 60,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Row(
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Container(
+        decoration: BoxDecoration( 
+          color: Colors.white
+        ),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                SizedBox(width: 16,),
-                  //Whatup
-                  InkWell(
-                    onTap: () {
-                      launchUrl(whatApp);
-                    },
-                    child: Image.asset("assets/whatapp.png"),
+                  DetailAppBar(
+                    categoryModel: widget.categoryModel,
+                    plus: widget.plus ?? 0,
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                                    Spacer(),
-
-//email
-
-                  InkWell(
-                      onTap: () {
-                        String? encodeQueryParameters(
-                            Map<String, String> params) {
-                          return params.entries
-                              .map((MapEntry<String, String> e) =>
-                                  '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-                              .join('&');
-                        }
-
-                        final Uri emailUri = Uri(
-                          scheme: 'mailto',
-                          path: "bikram@gmail.com",
-                          query: encodeQueryParameters(<String, String>{
-                            'subject': 'Give us a Like',
-                            'body': 'D\'ont forget to sucribe the channel',
-                          }),
-                        );
-                        launchUrl(emailUri);
-
-                        // launchEmail('example@example.com', 'Hello!', 'This is a test email body.');
-                      },
-                      child: Image.asset("assets/gmail.png")
-                      
-                      ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                                    Spacer(),
-
-//phone
-
-                  InkWell(
-                    onTap: (){  
-                      number = widget.categoryModel!.phonenumber;
-              dialNumber = Uri(scheme: 'tel', path: number!);
-              callNumber();
-                    },
-                    child: Image.asset("assets/call.webp",height: 50)
-                    
+                  SizedBox(height: 0),
+                  ContentIntro(categoryModel: widget.categoryModel),
+                  SizedBox(height: 30),
+                  List_Of_Operator(categoryModel: widget.categoryModel),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Container(
+                      height: 2,
+                      width: MediaQuery.of(context).size.width / 1.06,
+                      color: Colors.grey,
                     ),
-                  SizedBox(
-                    width: 20,
                   ),
-                                    Spacer(),
-
-                  InkWell(
-                    onTap: () async {
-                      final Uri url = Uri(
-                        scheme: 'sms',
-                        path: "1234567890",
-                        queryParameters: {'body': 'Hello!'},
-                      );
-                      if (await canLaunchUrl(url)) {
-                        await launchUrl(url);
-                      } else {
-                        print("show dialog: cannot launch this url");
-                      }
-                    },
-                    child: Image.asset("assets/message.png",height: 50,),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-
-                  //share
-                 // Icon(Icons.share),
+                  About(categoryModel: widget.categoryModel),
+                  SizedBox(height: 20),
+                 // Text("${widget.categoryModel!.address.length}"),
+                 Padding(
+                   padding: const EdgeInsets.only(left: 16,bottom: 10),
+                   child: Text(
+                              "Releted",
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors
+                                      .green, // Optional: Set the underline color
+                                  decorationThickness: 3,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                 ),
+                  _buildRecentOrNear(),
+                  SizedBox(height: 100),
                 ],
               ),
             ),
-          ),
-        ],
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 60,
+                decoration: BoxDecoration(color: Colors.white),
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                  SizedBox(width: 16,),
+                    //Whatup
+                    InkWell(
+                      onTap: () {
+                        launchUrl(whatApp);
+                      },
+                      child: Image.asset("assets/whatapp.png"),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                                      Spacer(),
+        
+        //email
+        
+                    InkWell(
+                        onTap: () {
+                          String? encodeQueryParameters(
+                              Map<String, String> params) {
+                            return params.entries
+                                .map((MapEntry<String, String> e) =>
+                                    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                .join('&');
+                          }
+        
+                          final Uri emailUri = Uri(
+                            scheme: 'mailto',
+                            path: "bikram@gmail.com",
+                            query: encodeQueryParameters(<String, String>{
+                              'subject': 'Give us a Like',
+                              'body': 'D\'ont forget to sucribe the channel',
+                            }),
+                          );
+                          launchUrl(emailUri);
+        
+                          // launchEmail('example@example.com', 'Hello!', 'This is a test email body.');
+                        },
+                        child: Image.asset("assets/gmail.png")
+                        
+                        ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                                      Spacer(),
+        
+        //phone
+        
+                    InkWell(
+                      onTap: (){  
+                        number = widget.categoryModel!.phonenumber;
+                dialNumber = Uri(scheme: 'tel', path: number!);
+                callNumber();
+                      },
+                      child: Image.asset("assets/call.webp",height: 50)
+                      
+                      ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                                      Spacer(),
+        
+                    InkWell(
+                      onTap: () async {
+                        final Uri url = Uri(
+                          scheme: 'sms',
+                          path: "1234567890",
+                          queryParameters: {'body': 'Hello!'},
+                        );
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url);
+                        } else {
+                          print("show dialog: cannot launch this url");
+                        }
+                      },
+                      child: Image.asset("assets/message.png",height: 50,),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+        
+                    //share
+                   // Icon(Icons.share),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

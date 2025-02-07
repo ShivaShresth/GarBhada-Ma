@@ -25,6 +25,7 @@ class _PricingState extends State<Pricing> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       // appBar: AppBar(
       //   backgroundColor: Colors.white,
       //   title: Text("Pricing"),

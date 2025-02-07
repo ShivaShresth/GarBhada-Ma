@@ -44,6 +44,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     final appProvider = Provider.of<AppProvider>(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(

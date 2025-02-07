@@ -11,21 +11,31 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 1,
+        title: Text(
+                    "Privacy Policy",
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  ),
+         leading: InkWell(
+          onTap: (){  
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back_ios)),
+              backgroundColor: Colors.white,
+
+      ),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Column(
             children: [
-              Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Privacy Policy",
-                    style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  )),
+            
               SizedBox(
                 height: 20,
               ),

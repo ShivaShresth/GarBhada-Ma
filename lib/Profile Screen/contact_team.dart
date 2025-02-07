@@ -26,9 +26,16 @@ class _Contact_TeamState extends State<Contact_Team> {
     double width = MediaQuery.of(context).size.width;
     double  height=MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 1,
+         leading: InkWell(
+          onTap: (){  
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back_ios)),
         backgroundColor: Colors.white,
-        title: Text("Contact Us"),
+        title:Text("Contact Us",style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 30),),
         centerTitle: true,
       ),
       body: SafeArea(

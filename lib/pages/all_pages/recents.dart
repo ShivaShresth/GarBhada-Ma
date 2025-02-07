@@ -132,7 +132,7 @@ class _RecentsState extends State<Recents> {
               ),
               itemCount: categoriesList.length,
               itemBuilder: (context, index) {
-                return CategoryCard(category: categoriesList[index]);
+                return CategoryCard(category: categoriesList[index], index: index,onUpdateViewCount: updateViewCount,);
               },
             ),
     );
@@ -249,11 +249,18 @@ class CategoryCardShimmer extends StatelessWidget {
   }
 }
 
-class CategoryCard extends StatelessWidget {
+class CategoryCard extends StatefulWidget {
   final CategoryModel category;
+  final int index;
+  final Function? onUpdateViewCount;
 
-  const CategoryCard({Key? key, required this.category}) : super(key: key);
+   CategoryCard({Key? key, required this.category, required this.index, this.onUpdateViewCount}) : super(key: key);
 
+  @override
+  State<CategoryCard> createState() => _CategoryCardState();
+}
+
+class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     double height=MediaQuery.of(context).size.height;
@@ -261,11 +268,21 @@ class CategoryCard extends StatelessWidget {
     double cardWidth = (screenWidth);
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: () {
+      onPressed: ()async{
+         // Increment view count
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        int currentViewCount = prefs.getInt("num_${widget.category.id}") ?? 0;
+        prefs.setInt("num_${widget.category.id}", currentViewCount + 1);
+
+        // Update the view count in Firestore
+        if (widget.onUpdateViewCount != null) {
+          await widget.onUpdateViewCount!( widget.category.viewId);
+        }
+
         Navigator.push(
           context,
           PageTransition(
-            child: DetailPage(categoryModel: category),
+            child: DetailPage(categoryModel: widget.category),
             type: PageTransitionType.fade,
             duration: Duration(milliseconds: 400),
           ),
@@ -301,7 +318,7 @@ class CategoryCard extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: CachedNetworkImage(
-                            imageUrl: category.image[0],
+                            imageUrl: widget.category.image[0],
                             height: height*0.2,
                             width: cardWidth*0.1,
                             fit: BoxFit.cover,
@@ -351,15 +368,15 @@ class CategoryCard extends StatelessWidget {
                         children: [
                           SizedBox(height: height*0.05),
                           Text(
-                            "Rs. ${category.rent}",
+                            "Rs. ${widget.category.rent}",
                             style: TextStyle(fontSize: cardWidth*0.04, color: Colors.black),
                           ),
                           SizedBox(height: height*0.002),
                           Container(
                             width: 190,
                             child: Text(
-                              category.address.isNotEmpty
-                                  ? category.address[0].toUpperCase() + category.address.substring(1)
+                              widget.category.address.isNotEmpty
+                                  ? widget.category.address[0].toUpperCase() + widget.category.address.substring(1)
                                   : "",  // In case the address is empty, it avoids showing null or empty text
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -378,13 +395,13 @@ class CategoryCard extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.only(left: cardWidth*0.02, right: cardWidth*0.02, top: height*0.006, bottom: height*0.006),
                             decoration: BoxDecoration(
-                              color: category.isFavourite ? Colors.green : Colors.red,
+                              color: widget.category.isFavourite ? Colors.green : Colors.red,
                               borderRadius: BorderRadius.all(Radius.circular(8)),
                             ),
                             
                             
                             child: Text(
-                              "Post On :- ${calculateTimeDifference(category.date)}",
+                              "Post On :- ${calculateTimeDifference(widget.category.date)}",
                               style: TextStyle(fontSize: cardWidth*0.03, color: Colors.white),
                             ),
                           ),
@@ -405,8 +422,8 @@ class CategoryCard extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(100)),
                 ),
                 child: Icon(
-                  category.isFavourite ? Icons.lock_open : Icons.lock_outline,
-                  color: category.isFavourite ? Colors.green : Colors.red,
+                  widget.category.isFavourite ? Icons.lock_open : Icons.lock_outline,
+                  color: widget.category.isFavourite ? Colors.green : Colors.red,
                   size: 25,
                 ),
               ),
@@ -416,6 +433,7 @@ class CategoryCard extends StatelessWidget {
       ),
     );
   }
+
   String calculateTimeDifference(String dateString) {
     DateTime postDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateString);
     DateTime now = DateTime.now();

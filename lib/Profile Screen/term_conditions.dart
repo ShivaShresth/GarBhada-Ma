@@ -11,15 +11,25 @@ class _Term_ConditionsState extends State<Term_Conditions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 1,
+        centerTitle: true,
+        title: Text("Term & Conditions",style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 30),),
+         leading: InkWell(
+          onTap: (){  
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back_ios)),
+              backgroundColor: Colors.white,
+
+      ),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(left: 20,right: 20,bottom: 20),
           child: Column(  
             children: [  
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text("Term & Conditions",style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 20),)),
               
               SizedBox(height: 10,),
               Align(

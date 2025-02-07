@@ -96,7 +96,15 @@ class _Edit_PageState extends State<Edit_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: InkWell(
+          onTap: (){  
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back_ios)),
+        backgroundColor: Colors.white,
+        elevation: 0.7,
         title: Text('Edit Page'),
       ),
       body: isLoading
