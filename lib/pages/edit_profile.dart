@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:renthouse/constants/constants.dart';
 import 'package:renthouse/constants/routes.dart';
 import 'package:renthouse/model/category_model.dart';
 import 'package:renthouse/pages/all_pages/update_profile.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Edit_Page extends StatefulWidget {
   const Edit_Page({Key? key}) : super(key: key);
@@ -14,7 +17,18 @@ class Edit_Page extends StatefulWidget {
   State<Edit_Page> createState() => _Edit_PageState();
 }
 
-class _Edit_PageState extends State<Edit_Page> {
+class _Edit_PageState extends State<Edit_Page>with SingleTickerProviderStateMixin{
+  late AnimationController _controller;
+  late Animation<double> _animation1;
+  late Animation<double> _animation2;
+  bool _shimer = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   late CollectionReference productCollection;
   List<CategoryModel> products = [];
   bool isLoading = true;
@@ -25,6 +39,39 @@ class _Edit_PageState extends State<Edit_Page> {
     // Initialize Firestore and fetch products
     productCollection = FirebaseFirestore.instance.collection('cat').doc(FirebaseAuth.instance.currentUser!.uid).collection("cats");
     fetchProducts();
+       Timer(Duration(seconds: 2), () {
+      setState(() {
+        _shimer = true; // Set _shimer to false after 3 seconds
+      });
+    });
+    // Start a timer
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        _shimer = false; // Set _shimer to false after 3 seconds
+      });
+    });
+  
+    // TODO: implement initState
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+
+    _animation1 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.35, 1.0),
+      ),
+    );
+
+    _animation2 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.45, 1.0),
+      ),
+    );
+    _controller.forward();
   }
 
   fetchProducts() async {  
@@ -97,16 +144,56 @@ class _Edit_PageState extends State<Edit_Page> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
+       appBar: AppBar(
+        centerTitle: true,
+        elevation: 1,
+        title: AnimatedBuilder(
+            animation: _controller,
+            builder: (BuildContext context, Widget? child) {
+              return _shimer
+                  ? Transform.translate(
+                      offset: Offset(-100 * (1 - _animation1.value), 0),
+                      child: Opacity(
+                        opacity: _animation1.value,
+                        child: Shimmer.fromColors(
+                            baseColor: Colors.green,
+                            highlightColor: Colors.yellow,
+                            child: Text(
+                              "Edit Page",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30),
+                            )),
+                      ),
+                    )
+                  : Transform.translate(
+                      offset: Offset(-100 * (1 - _animation1.value), 0),
+
+                      child: Opacity(
+                          opacity: _animation1.value,
+
+                          // child: Shimmer.fromColors(
+                          //        baseColor: Colors.green,
+                          //                       highlightColor: Colors.yellow,
+                          child: Text(
+                            "Edit Page",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30),
+                          )),
+                      // ),
+                    );
+            }),
         leading: InkWell(
-          onTap: (){  
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back_ios)),
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back_ios)),
         backgroundColor: Colors.white,
-        elevation: 0.7,
-        title: Text('Edit Page'),
       ),
+      
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : products.isEmpty

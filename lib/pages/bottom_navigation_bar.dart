@@ -116,6 +116,8 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
   int _selectedIndex = 0;
   ScrollController? scrollController;
   ValueNotifier<bool> _isBottomBarVisibleNotifier = ValueNotifier(true);
+    ValueNotifier<bool> _isAppBarVisibleNotifier = ValueNotifier(true);
+
 
   @override
   void initState() {
@@ -129,6 +131,8 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
     scrollController!.removeListener(_scrollListener);
     scrollController!.dispose();
     _isBottomBarVisibleNotifier.dispose();
+        _isAppBarVisibleNotifier.dispose();
+
     super.dispose();
   }
 
@@ -141,10 +145,16 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
       if (_isBottomBarVisibleNotifier.value) {
         _isBottomBarVisibleNotifier.value = false;
       }
+         if (_isAppBarVisibleNotifier.value) {
+        _isAppBarVisibleNotifier.value = false;
+      }
     } else if (isScrollingUp) {
       // Show the bottom bar when scrolling up
       if (!_isBottomBarVisibleNotifier.value) {
         _isBottomBarVisibleNotifier.value = true;
+      }
+      if (!_isAppBarVisibleNotifier.value) {
+        _isAppBarVisibleNotifier.value = true;
       }
     }
   }
@@ -152,17 +162,19 @@ class _Bottom_Navigation_BarState extends State<Bottom_Navigation_Bar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: PageView(
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(),
         children: [
           HomePage(scrollController: scrollController),
-          FavouriteScreen(),
-          AddProductPage(),
-          Pricing(),
-          AccountScreen(),
+          FavouriteScreen(scrollController: scrollController,),
+          AddProductPage(scrollController: scrollController,),
+          Pricing(scrollController: scrollController,),
+          AccountScreen(scrollController: scrollController,),
         ],
       ),
+      
       bottomNavigationBar: ValueListenableBuilder<bool>(
         valueListenable: _isBottomBarVisibleNotifier,
         builder: (context, isBottomBarVisible, child) {

@@ -246,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                     WelcomeText(isShimmerActive: _isShimmerActive),
                     SearchInput(),
                     HomePages(toprent: _isShimmerActive),
-                    if (_isRefreshing) CircularProgressIndicator(), // Show loading indicator while refreshing
+                    //if (_isRefreshing) CircularProgressIndicator(), // Show loading indicator while refreshing
                   ],
                 ),
               ),

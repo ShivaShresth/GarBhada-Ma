@@ -93,7 +93,16 @@ class _DetailPageState extends State<DetailPage> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 60,
-                decoration: BoxDecoration(color: Colors.white),
+                decoration: BoxDecoration(
+                   boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.4),
+                      spreadRadius: 3,
+                      blurRadius: 3,
+                      offset: Offset(2, 2),
+                    ),
+                  ],
+                  color: Colors.white),
                 child: Row(
                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:renthouse/Profile%20Screen/term_conditions.dart';
+import 'package:shimmer/shimmer.dart';
 
 class About_GarBhadama extends StatefulWidget {
   const About_GarBhadama({super.key});
@@ -8,35 +11,115 @@ class About_GarBhadama extends StatefulWidget {
   State<About_GarBhadama> createState() => _About_GarBhadamaState();
 }
 
-class _About_GarBhadamaState extends State<About_GarBhadama> {
+class _About_GarBhadamaState extends State<About_GarBhadama>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation1;
+  late Animation<double> _animation2;
+  bool _shimer = false;
+
+  @override
+  void initState() {
+        Timer(Duration(seconds: 2), () {
+      setState(() {
+        _shimer = true; // Set _shimer to false after 3 seconds
+      });
+    });
+    // Start a timer
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        _shimer = false; // Set _shimer to false after 3 seconds
+      });
+    });
+  
+    // TODO: implement initState
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+
+    _animation1 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.35, 1.0),
+      ),
+    );
+
+    _animation2 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.45, 1.0),
+      ),
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        elevation:1,
-        title:Text(
-                    "About Us",
-                    style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30),
-                  ) ,
-         leading: InkWell(
-          onTap: (){  
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back_ios)),
-              backgroundColor: Colors.white,
+        elevation: 1,
+        title: AnimatedBuilder(
+            animation: _controller,
+            builder: (BuildContext context, Widget? child) {
+              return _shimer
+                  ? Transform.translate(
+                      offset: Offset(-100 * (1 - _animation1.value), 0),
+                      child: Opacity(
+                        opacity: _animation1.value,
+                        child: Shimmer.fromColors(
+                            baseColor: Colors.green,
+                            highlightColor: Colors.yellow,
+                            child: Text(
+                              "About Us",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30),
+                            )),
+                      ),
+                    )
+                  : Transform.translate(
+                      offset: Offset(-100 * (1 - _animation1.value), 0),
 
+                      child: Opacity(
+                          opacity: _animation1.value,
+
+                          // child: Shimmer.fromColors(
+                          //        baseColor: Colors.green,
+                          //                       highlightColor: Colors.yellow,
+                          child: Text(
+                            "About Us",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30),
+                          )),
+                      // ),
+                    );
+            }),
+        leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back_ios)),
+        backgroundColor: Colors.white,
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 20,right: 20),
+        padding: EdgeInsets.only(left: 20, right: 20),
         child: SingleChildScrollView(
           child: Column(
             children: [
-            
               SizedBox(
                 height: 10,
               ),
@@ -117,13 +200,11 @@ class _About_GarBhadamaState extends State<About_GarBhadama> {
                   children: [
                     Text("See more for "),
                     InkWell(
-                    
-                         onTap: (){  
-                    Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Term_Conditions()));
-                        
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Term_Conditions()));
                       },
                       child: Text(
                         "Terms and Conditions",

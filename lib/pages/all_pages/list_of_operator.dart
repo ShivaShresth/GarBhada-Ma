@@ -24,17 +24,19 @@ class CategoryModels {
 }
 
 class FirebaseFirestoreHelper {
-  static final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  static final FirebaseFirestore _firebaseFirestore =
+      FirebaseFirestore.instance;
 
   // Function to fetch category data
   Future<List<CategoryModels>> takePhotget() async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> querySnapshot = await _firebaseFirestore
-          .collection("cat")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("gamer")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .get();
+      DocumentSnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseFirestore
+              .collection("cat")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection("gamer")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .get();
 
       if (!querySnapshot.exists) {
         print("Document does not exist");
@@ -53,6 +55,7 @@ class FirebaseFirestoreHelper {
     }
   }
 }
+
 class List_Of_Operator extends StatefulWidget {
   final CategoryModel? categoryModel;
   const List_Of_Operator({super.key, this.categoryModel});
@@ -145,60 +148,91 @@ class _List_Of_OperatorState extends State<List_Of_Operator> {
                 child: Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                   FutureBuilder<List<CategoryModels>>(
-  future: FirebaseFirestoreHelper().takePhotget(),
-  builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return CircularProgressIndicator();
-    } else if (snapshot.hasError) {
-      return Text('Error loading image: ${snapshot.error}');
-    } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-      List<dynamic> imageUrl = snapshot.data![0].imageUrls;
-      if (imageUrl.isEmpty) {
-        return Text('Image URL is empty.');
-      }
+                    FutureBuilder<List<CategoryModels>>(
+                      future: FirebaseFirestoreHelper().takePhotget(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error loading image: ${snapshot.error}');
+                        } else if (snapshot.hasData &&
+                            snapshot.data!.isNotEmpty) {
+                          List<dynamic> imageUrl = snapshot.data![0].imageUrls;
+                          if (imageUrl.isEmpty) {
+                            return Text('Image URL is empty.');
+                          }
 
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-           
-      (widget.categoryModel!.facebook=="Not Avaliable")?Image.asset("assets/a.png",height: 30,scale: 2,):    InkWell(
-      onTap: (){
-      Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => OpenFacebook(
-                                      categoryModel: widget.categoryModel,
-                                    )));},
-              child: Container(
-                padding: EdgeInsets.all(1),
-                // decoration: BoxDecoration(
-                //   border: Border.all(width: 5, color: Colors.grey.shade700),
-                //   shape: BoxShape.circle,
-                // ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: CachedNetworkImage(
-                    imageUrl: imageUrl.isNotEmpty ? imageUrl[0] : '',
-                    height: 40,
-                    width: 40,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-    }
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                (widget.categoryModel!.facebook ==
+                                        "Not Avaliable")
+                                    ? Container(
+                                      padding: EdgeInsets.all(1),
+                                      decoration: BoxDecoration(
+                                       
+                                    border: Border.all(
+                                        width: 1, color: Colors.grey.shade700),
+                                  shape: BoxShape.circle
+                                    
+                                    ),
+                                      child: ClipOval(
+                                        child: Image.asset(
+                                            "assets/a.png",
+                                            height: 40,
+                                            width: 40,
+                                            fit: BoxFit.cover,
+                                          ),
+                                      ),
+                                    )
+                                    : InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      OpenFacebook(
+                                                        categoryModel: widget
+                                                            .categoryModel,
+                                                      )));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(1),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  width: 1,
+                                                  color: Colors.grey.shade700),
+                                              shape: BoxShape.circle),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            child: CachedNetworkImage(
+                                              imageUrl: imageUrl.isNotEmpty
+                                                  ? imageUrl[0]
+                                                  : '',
+                                              height: 40,
+                                              width: 40,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) =>
+                                                  CircularProgressIndicator(),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                              ],
+                            ),
+                          );
+                        }
 
-    return Text('No data available');
-  },
-),
+                        return Text('No data available');
+                      },
+                    ),
 
                     // InkWell(
                     //   onTap: () {
@@ -215,7 +249,7 @@ class _List_Of_OperatorState extends State<List_Of_Operator> {
                     //     padding: const EdgeInsets.only(left: 10),
                     //     child: CircleAvatar(
                     //       radius: 20,
-                    //       backgroundImage:(widget.categoryModel!.facebook=="Not Avaliable")? 
+                    //       backgroundImage:(widget.categoryModel!.facebook=="Not Avaliable")?
                     //       //  widget
                     //       //         .categoryModel!.facebook!.isNotEmpty
                     //            NetworkImage(

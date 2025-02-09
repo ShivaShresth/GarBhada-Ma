@@ -92,9 +92,7 @@ class _SliderScreenState extends State<SliderScreen> {
     double width=MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          color: Colors.white
-        ),
+      color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,44 +225,58 @@ class _SliderScreenState extends State<SliderScreen> {
               )
             else
               Center(child: CircularProgressIndicator()),
+              SizedBox(height: 0.1,),
         
             // House Information
-            GestureDetector(
-              onTap: () async {
-                String? userNumber = await SharedPreferenceHelper().getNumber();
-                if (userNumber != null) {
-                  setState(() {
-                    currentIndex = int.parse(userNumber);
-                    carouselSliderController.animateToPage(currentIndex); // Use the updated method
-                  });
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15, top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "House Information",
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        decorationColor: Colors.green,
-                        decorationThickness: 3,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+            Container(
+                margin: EdgeInsets.only(top: 3),
+        decoration: BoxDecoration(
+          color: Colors.white,
+ boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                      offset: Offset(-2, -2),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Row(
-                        children: [
-                          Icon(Icons.remove_red_eye),
-                          SizedBox(width: 10),
-                          Text(plus != null ? "$plus" : "Loading..."), // Display updated plus value
-                        ],
+                  ],        ),
+              child: GestureDetector(
+                onTap: () async {
+                  String? userNumber = await SharedPreferenceHelper().getNumber();
+                  if (userNumber != null) {
+                    setState(() {
+                      currentIndex = int.parse(userNumber);
+                      carouselSliderController.animateToPage(currentIndex); // Use the updated method
+                    });
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15, top: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "House Information",
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.green,
+                          decorationThickness: 3,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Row(
+                          children: [
+                            Icon(Icons.remove_red_eye),
+                            SizedBox(width: 10),
+                            Text(plus != null ? "$plus" : "Loading..."), // Display updated plus value
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

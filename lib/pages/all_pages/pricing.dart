@@ -1,15 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Pricing extends StatefulWidget {
-  const Pricing({super.key});
+    ScrollController? scrollController;
+
+   Pricing({super.key,this.scrollController});
 
   @override
   State<Pricing> createState() => _PricingState();
 }
 
-class _PricingState extends State<Pricing> {
+class _PricingState extends State<Pricing>with SingleTickerProviderStateMixin{
+   late AnimationController _controller;
+  late Animation<double> _animation1;
+  late Animation<double> _animation2;
+  bool _shimer = false;
+
   String? number;
   final Uri whatApp = Uri.parse("https://wa.me/122");
 
@@ -19,11 +29,55 @@ class _PricingState extends State<Pricing> {
   callNumber() async {
     await launchUrl(dialNumber);
   }
+   @override
+  void initState() {
+        Timer(Duration(seconds: 2), () {
+      setState(() {
+        _shimer = true; // Set _shimer to false after 3 seconds
+      });
+    });
+    // Start a timer
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        _shimer = false; // Set _shimer to false after 3 seconds
+      });
+    });
+  
+    // TODO: implement initState
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+
+    _animation1 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.35, 1.0),
+      ),
+    );
+
+    _animation2 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.45, 1.0),
+      ),
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+      bool _isBottomBarVisible = true;
+
     return Scaffold(
       backgroundColor: Colors.white,
       // appBar: AppBar(
@@ -33,18 +87,57 @@ class _PricingState extends State<Pricing> {
       // ),
       body: SafeArea(
         child: SingleChildScrollView(
+          controller: widget.scrollController,
           child: Container(
             decoration: BoxDecoration(color: Colors.white),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                                        SizedBox(height: 10,),
+
+                 Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                   child: AnimatedBuilder(
+                               animation: _controller,
+                               builder: (BuildContext context, Widget? child) {
+                                 return _shimer
+                    ? Transform.translate(
+                        offset: Offset(-2 * (1 - _animation1.value), 0),
+                        child: Opacity(
+                          opacity: _animation1.value,
+                          child: Shimmer.fromColors(
+                              baseColor: Colors.blue,
+                              highlightColor: Colors.yellow,
+                              child:                         Text("Pricing",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 35),),
+                   
+                              ),
+                        ),
+                      )
+                    : Transform.translate(
+                        offset: Offset(-100 * (1 - _animation1.value), 0),
+                   
+                        child: Opacity(
+                            opacity: _animation1.value,
+                   
+                            // child: Shimmer.fromColors(
+                            //        baseColor: Colors.green,
+                            //                       highlightColor: Colors.yellow,
+                            child:                         Text("Pricing",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 35),),
+                   
+                            
+                            ),
+                        // ),
+                      );
+                               }),
+                 ),
                 Container(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Pricing",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 25),),
+                                                SizedBox(height: 10,),
+
                         Text(
                             "GharBhadaMa provides different kinds of services for the buyers and sellers of properties in Nepal. If you are a seller, you choose among the following types of services which are best fit for your property.",style: TextStyle(color: Colors.black,fontSize: 16) ,),
                       ],

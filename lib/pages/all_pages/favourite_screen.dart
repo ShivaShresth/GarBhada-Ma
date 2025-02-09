@@ -9,7 +9,10 @@ import '../../provider/app_provider.dart';
 import 'package:renthouse/screen/detail/widget/detail_app_bar.dart';
 
 class FavouriteScreen extends StatefulWidget {
-  const FavouriteScreen({Key? key}) : super(key: key);
+    ScrollController? scrollController;
+
+  
+   FavouriteScreen({Key? key,this.scrollController}) : super(key: key);
 
   @override
   State<FavouriteScreen> createState() => _FavouriteScreenState();
@@ -42,6 +45,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   @override
   Widget build(BuildContext context) {
     final appProvider = Provider.of<AppProvider>(context);
+      bool _isBottomBarVisible = true;
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -62,6 +67,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   ),
                 )
               : ListView.builder(
+                controller: widget.scrollController,
                   itemCount: appProvider.getFavouriteProductList.length,
                   padding: EdgeInsets.all(12),
                   itemBuilder: (ctx, index) {

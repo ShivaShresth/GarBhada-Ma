@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PrivacyPolicy extends StatefulWidget {
   const PrivacyPolicy({super.key});
@@ -7,7 +10,54 @@ class PrivacyPolicy extends StatefulWidget {
   State<PrivacyPolicy> createState() => _PrivacyPolicyState();
 }
 
-class _PrivacyPolicyState extends State<PrivacyPolicy> {
+class _PrivacyPolicyState extends State<PrivacyPolicy>with SingleTickerProviderStateMixin{
+  late AnimationController _controller;
+  late Animation<double> _animation1;
+  late Animation<double> _animation2;
+  bool _shimer = false;
+
+  @override
+  void initState() {
+        Timer(Duration(seconds: 2), () {
+      setState(() {
+        _shimer = true; // Set _shimer to false after 3 seconds
+      });
+    });
+    // Start a timer
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        _shimer = false; // Set _shimer to false after 3 seconds
+      });
+    });
+  
+    // TODO: implement initState
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+
+    _animation1 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.35, 1.0),
+      ),
+    );
+
+    _animation2 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.45, 1.0),
+      ),
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,13 +65,49 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 1,
-        title: Text(
-                    "Privacy Policy",
-                    style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30),
-                  ),
+        title:AnimatedBuilder(
+            animation: _controller,
+            builder: (BuildContext context, Widget? child) {
+              return _shimer
+                  ? Transform.translate(
+                      offset: Offset(-100 * (1 - _animation1.value), 0),
+                      child: Opacity(
+                        opacity: _animation1.value,
+                        child: Shimmer.fromColors(
+                            baseColor: Colors.green,
+                            highlightColor: Colors.yellow,
+                            child: Text(
+                              "Privacy Policy",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30),
+                            )),
+                      ),
+                    )
+                  : Transform.translate(
+                      offset: Offset(-100 * (1 - _animation1.value), 0),
+
+                      child: Opacity(
+                          opacity: _animation1.value,
+
+                          // child: Shimmer.fromColors(
+                          //        baseColor: Colors.green,
+                          //                       highlightColor: Colors.yellow,
+                          child: Text(
+                            "Privacy Policy",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30),
+                          )),
+                      // ),
+                    );
+            }),
+        
+        
+        
+        
          leading: InkWell(
           onTap: (){  
             Navigator.pop(context);

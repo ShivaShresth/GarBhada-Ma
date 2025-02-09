@@ -116,7 +116,7 @@ class _WelcomeTextState extends State<WelcomeText>
       animation: _controller,
       builder: (BuildContext context, Widget? child) {
         return Container(
-          padding: EdgeInsets.only(left: 6, right: 0, bottom: 10, top: 15),
+          padding: EdgeInsets.only(left: 6, right: 4, bottom: 10, top: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

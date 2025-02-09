@@ -26,7 +26,9 @@ import 'package:renthouse/widgets/drop.dart';
 import 'package:renthouse/widgets/drop_down_btn.dart';
 
 class AddProductPage extends StatefulWidget {
-  const AddProductPage({super.key});
+    ScrollController? scrollController;
+
+   AddProductPage({super.key,this.scrollController});
 
   @override
   State<AddProductPage> createState() => _AddProductPageState();
@@ -396,9 +398,13 @@ class _AddProductPageState extends State<AddProductPage> {
 
   //bool isItemSaved = false;
   final _formKey = GlobalKey<FormState>();
+    bool _isAppBarVisible = true;
+
 
   @override
   Widget build(BuildContext context) {
+      bool _isBottomBarVisible = true;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -414,6 +420,7 @@ class _AddProductPageState extends State<AddProductPage> {
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
+            controller: widget.scrollController,
             child: Column(
               children: [
                 Container(

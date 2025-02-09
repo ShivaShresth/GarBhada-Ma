@@ -16,6 +16,8 @@ import 'package:renthouse/pages/edit_profile.dart';
 class FirebaseFirestoreHelper {
   static final FirebaseFirestore _firebaseFirestore =
       FirebaseFirestore.instance;
+                                    User? user = FirebaseAuth.instance.currentUser;
+
 
   // Function to fetch category data
   Future<List<CategoryModel>> takePhotget() async {
@@ -25,7 +27,7 @@ class FirebaseFirestoreHelper {
               .collection("cat")
               .doc(FirebaseAuth.instance.currentUser!.uid)
               .collection("gamer")
-              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .doc(user!.uid)
               .get();
 
       if (!querySnapshot.exists) {
@@ -47,7 +49,9 @@ class FirebaseFirestoreHelper {
 }
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key});
+    ScrollController? scrollController;
+
+   AccountScreen({super.key,this.scrollController});
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -86,6 +90,8 @@ class _AccountScreenState extends State<AccountScreen> {
     // AppProvider appProvider = Provider.of<AppProvider>(
     //   context,
     // );
+      bool _isBottomBarVisible = true;
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -109,6 +115,7 @@ class _AccountScreenState extends State<AccountScreen> {
       // ),
       body: SafeArea(
         child: SingleChildScrollView(
+          controller: widget.scrollController,
           scrollDirection: Axis.vertical,
           child: Container(
             padding: EdgeInsets.all(10),
@@ -177,7 +184,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 padding: EdgeInsets.all(1),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 5, color: Colors.grey.shade700),
+                                        width: 2, color: Colors.grey.shade700),
                                     shape: BoxShape.circle),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(100),

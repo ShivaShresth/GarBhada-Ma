@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Contact_Team extends StatefulWidget {
@@ -9,7 +12,55 @@ class Contact_Team extends StatefulWidget {
   State<Contact_Team> createState() => _Contact_TeamState();
 }
 
-class _Contact_TeamState extends State<Contact_Team> {
+class _Contact_TeamState extends State<Contact_Team>with SingleTickerProviderStateMixin{
+  late AnimationController _controller;
+  late Animation<double> _animation1;
+  late Animation<double> _animation2;
+  bool _shimer = false;
+
+  @override
+  void initState() {
+        Timer(Duration(seconds: 2), () {
+      setState(() {
+        _shimer = true; // Set _shimer to false after 3 seconds
+      });
+    });
+    // Start a timer
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        _shimer = false; // Set _shimer to false after 3 seconds
+      });
+    });
+  
+    // TODO: implement initState
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+
+    _animation1 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.35, 1.0),
+      ),
+    );
+
+    _animation2 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.45, 1.0),
+      ),
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   String? number;
   final Uri whatApp = Uri.parse("https://wa.me/122");
 
@@ -28,16 +79,55 @@ class _Contact_TeamState extends State<Contact_Team> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 1,
-         leading: InkWell(
-          onTap: (){  
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back_ios)),
-        backgroundColor: Colors.white,
-        title:Text("Contact Us",style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 30),),
         centerTitle: true,
+        elevation: 1,
+        title: AnimatedBuilder(
+            animation: _controller,
+            builder: (BuildContext context, Widget? child) {
+              return _shimer
+                  ? Transform.translate(
+                      offset: Offset(-100 * (1 - _animation1.value), 0),
+                      child: Opacity(
+                        opacity: _animation1.value,
+                        child: Shimmer.fromColors(
+                            baseColor: Colors.green,
+                            highlightColor: Colors.yellow,
+                            child: Text(
+                              "Contact Us",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30),
+                            )),
+                      ),
+                    )
+                  : Transform.translate(
+                      offset: Offset(-100 * (1 - _animation1.value), 0),
+
+                      child: Opacity(
+                          opacity: _animation1.value,
+
+                          // child: Shimmer.fromColors(
+                          //        baseColor: Colors.green,
+                          //                       highlightColor: Colors.yellow,
+                          child: Text(
+                            "Contact Us",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30),
+                          )),
+                      // ),
+                    );
+            }),
+        leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back_ios)),
+        backgroundColor: Colors.white,
       ),
+      
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

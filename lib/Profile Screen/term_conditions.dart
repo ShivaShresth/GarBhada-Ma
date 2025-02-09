@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Term_Conditions extends StatefulWidget {
   const Term_Conditions({super.key});
@@ -7,24 +10,110 @@ class Term_Conditions extends StatefulWidget {
   State<Term_Conditions> createState() => _Term_ConditionsState();
 }
 
-class _Term_ConditionsState extends State<Term_Conditions> {
+class _Term_ConditionsState extends State<Term_Conditions>with SingleTickerProviderStateMixin{
+  late AnimationController _controller;
+  late Animation<double> _animation1;
+  late Animation<double> _animation2;
+  bool _shimer = false;
+
+  @override
+  void initState() {
+        Timer(Duration(seconds: 2), () {
+      setState(() {
+        _shimer = true; // Set _shimer to false after 3 seconds
+      });
+    });
+    // Start a timer
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        _shimer = false; // Set _shimer to false after 3 seconds
+      });
+    });
+  
+    // TODO: implement initState
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+
+    _animation1 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.35, 1.0),
+      ),
+    );
+
+    _animation2 = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.45, 1.0),
+      ),
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 1,
         centerTitle: true,
-        title: Text("Term & Conditions",style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 30),),
-         leading: InkWell(
-          onTap: (){  
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back_ios)),
-              backgroundColor: Colors.white,
+        elevation: 1,
+        title: AnimatedBuilder(
+            animation: _controller,
+            builder: (BuildContext context, Widget? child) {
+              return _shimer
+                  ? Transform.translate(
+                      offset: Offset(-100 * (1 - _animation1.value), 0),
+                      child: Opacity(
+                        opacity: _animation1.value,
+                        child: Shimmer.fromColors(
+                            baseColor: Colors.green,
+                            highlightColor: Colors.yellow,
+                            child: Text(
+                              "Term & Conditions",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30),
+                            )),
+                      ),
+                    )
+                  : Transform.translate(
+                      offset: Offset(-100 * (1 - _animation1.value), 0),
 
+                      child: Opacity(
+                          opacity: _animation1.value,
+
+                          // child: Shimmer.fromColors(
+                          //        baseColor: Colors.green,
+                          //                       highlightColor: Colors.yellow,
+                          child: Text(
+                            "Term & Conditions",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30),
+                          )),
+                      // ),
+                    );
+            }),
+        leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back_ios)),
+        backgroundColor: Colors.white,
       ),
+     
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(left: 20,right: 20,bottom: 20),
